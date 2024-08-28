@@ -1,0 +1,6383 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+
+		<meta charset="UTF-8">
+
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+		<title>Spike Game</title>
+
+		<style>
+            * {
+                -webkit-user-drag: none;
+                -webkit-user-modify: none;
+                -webkit-highlight: none;
+                touch-action: pan-x pan-y;
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                -o-user-select: none;
+                user-select: none;
+                -webkit-tap-highlight-color: transparent;
+            }
+
+
+            @font-face {
+
+                font-family: 'SSFont';
+                font-display: block;
+                src: url('SuperSedan.ttf') format('truetype');
+
+            }
+
+            body {
+
+                max-width: 100%;
+
+                width: 100%;
+
+                max-height: 100vh;
+
+                margin: 0 auto;
+
+                overflow: hidden;
+
+                background-color: #3a461f;
+
+                font-family: 'SSFont';
+
+                background-repeat: no-repeat;
+
+                background-size: 100%;
+
+                min-height: 100vh;
+
+                position: relative;
+
+                display: flex;
+
+                align-items: center;
+
+                justify-content: center;
+
+            }
+
+
+            .fon-sky {
+
+                overflow: hidden;
+
+                position: absolute;
+
+                top: 0;
+
+                left: 0;
+
+                z-index: -1;
+
+                width: 100%;
+
+                height: 50vh;
+
+                background: url(img/fon/sky.png);
+
+                background-size: 100% 100%;
+
+            }
+
+
+            .fon-clouds-1 {
+
+                position: absolute;
+
+                top: 5%;
+
+                left: 0;
+
+                height: 40%;
+
+                aspect-ratio: 883 / 279;
+
+                background: url(img/fon/cloud_1.png) no-repeat;
+
+                background-size: 100% auto;
+
+                animation: clouds-move linear 20s infinite;
+
+                transform: translateX(-100%) translateZ(0);
+
+            }
+
+
+            .fon-clouds-2 {
+
+                position: absolute;
+
+                top: 40%;
+
+                left: 0;
+
+                height: 50%;
+
+                aspect-ratio: 68 / 27;
+
+                background: url(img/fon/cloud_2.png) no-repeat;
+
+                background-size: 100% auto;
+
+                animation: clouds-move linear 20s infinite;
+
+                animation-delay: 12s;
+
+                transform: translateX(-100%);
+
+            }
+
+
+            .fon-trees {
+
+                position: absolute;
+
+                height: 100%;
+
+                width: 100%;
+
+                left: 0;
+
+                top: 0;
+
+                background: url('img/fon/1.png') no-repeat;
+
+                background-size: 100%;
+
+                z-index: 1;
+
+            }
+
+
+            .fon-lawn {
+
+                position: absolute;
+
+                width: 100%;
+
+                bottom: 0;
+
+                height: 30vh;
+
+                z-index: -1;
+
+                background: url('img/fon/lawn.png') no-repeat;
+
+                background-size: 100% 100%;
+
+            }
+
+
+            .fon-forest {
+
+                position: absolute;
+
+                bottom: 26vh;
+
+                z-index: -1;
+
+                width: 100%;
+
+                height: 64vh;
+
+                background: url('img/fon/forest.png') no-repeat;
+
+                background-size: 100% auto;
+
+            }
+
+
+            .fon-tree {
+
+                position: absolute;
+
+                height: 92%;
+
+                bottom: 20%;
+
+                z-index: -1;
+
+                right: -11%;
+
+                aspect-ratio: 147 / 416;
+
+                background: url('img/fon/tree-right.png') no-repeat;
+
+                background-size: auto 100%;
+
+            }
+
+
+            .hits {
+
+                position: absolute;
+
+                top: 0;
+
+                left: 0;
+
+                height: 100%;
+
+                width: 100%;
+
+                overflow: hidden;
+
+                z-index: 2;
+
+            }
+
+
+            .baldo {
+                height: 1102px;
+                width: 668px;
+                position: absolute;
+                bottom: 10%;
+                left: 50%;
+                scale: 0.45;
+                transform: translateX(-50%);
+                transform-origin: bottom left;
+            }
+
+            .fon-grass {
+
+                position: absolute;
+
+                bottom: 0;
+
+                width: 100%;
+
+                height: 163px;
+
+                overflow: hidden;
+
+            }
+
+
+            .fon-grass div {
+
+                height: 100%;
+
+                aspect-ratio: 538 / 513;
+
+                position: absolute;
+
+                background: url(img/fon/grass_1.gif) 0px 0px;
+
+                background-size: auto 100%;
+
+                bottom: -28px;
+
+                z-index: 1;
+
+            }
+
+
+            .fon-grass-1 {
+
+                left: -12%;
+
+            }
+
+
+            .fon-grass-2 {
+
+                left: 15%;
+
+            }
+
+
+            .fon-grass-3 {
+
+                left: 38%;
+
+            }
+
+
+            .fon-grass-4 {
+
+                left: 63%;
+
+            }
+
+
+            .fon-grass-flower {
+
+                width: 115px;
+
+                aspect-ratio: 237 / 113;
+
+                position: absolute;
+
+                background: url(img/fon/flower.gif) 0px 0px no-repeat;
+
+                background-size: 100%;
+
+                bottom: 80px;
+
+                left: 2%;
+
+                z-index: 1;
+
+            }
+
+
+            .fon-grass-flower-2 {
+
+                height: 8vh;
+
+                aspect-ratio: 237 / 124;
+
+                position: absolute;
+
+                background: url(img/fon/flower_2.gif) 0px 0px no-repeat;
+
+                background-size: 100%;
+
+                bottom: 17%;
+
+                right: 7%;
+
+                z-index: -1;
+
+            }
+
+
+            .fon-grass-flower-3 {
+
+                height: 8vh;
+
+                aspect-ratio: 153 / 80;
+
+                position: absolute;
+
+                background: url(img/fon/flower_3.gif) 0px 0px no-repeat;
+
+                background-size: 100%;
+
+                bottom: 21%;
+
+                left: 13%;
+
+                z-index: -1;
+
+            }
+
+
+            .chock-left-crack {
+
+                height: 250px;
+
+                width: 432px;
+
+                position: fixed;
+
+                zoom: 1.2;
+
+                background: url(img/chock_crack.png) 0px 0px;
+
+                bottom: 18%;
+
+                left: -28%;
+
+                overflow: hidden;
+
+                visibility: hidden;
+
+                /*animation: chock_left_crack_play 1s steps(58) infinite;*/
+
+            }
+
+
+            .chock-right-crack {
+
+                height: 250px;
+
+                width: 432px;
+
+                position: fixed;
+
+                zoom: 1.2;
+
+                background: url(img/chock_crack.png) 0px 0px;
+
+                bottom: 18%;
+
+                right: -18%;
+
+                transform: rotateY(180deg);
+
+                overflow: hidden;
+
+                visibility: hidden;
+
+                /*animation: chock_right_crack_play 1s steps(58) infinite;*/
+
+            }
+
+            .preloader {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 30vw;
+                height: 30vw;
+                background: url(img/ui/preloader-v2.gif);
+                background-size: contain;
+            }
+
+            .energy-bar {
+
+                height: 141px;
+
+                width: 312px;
+
+                background: url(img/ui/energy_bar.png) 0px 0px;
+
+                position: absolute;
+
+                zoom: 0.55;
+
+                top: 1%;
+
+                left: 2%;
+
+            }
+
+            .energy-bar > text {
+
+                font-family: 'SSFont';
+
+                color: #321e06;
+
+                mix-blend-mode: multiply;
+
+                opacity: 0.5;
+
+                position: absolute;
+
+                right: 40px;
+
+                bottom: 57px;
+
+                font-size: 24px;
+
+            }
+
+
+            .counter-fon {
+
+                height: 40px;
+
+                width: 139px;
+
+                background: url(img/ui/counter.png) 0px 0px no-repeat;
+
+                background-size: cover;
+
+                position: absolute;
+
+                top: 4%;
+
+                right: 0%;
+
+            }
+
+
+            .balance {
+
+                font-family: 'SSFont';
+
+                text-shadow: 2px 0px 0px #704918, -2px 0px 0px #704918, 0px 2px 0px #704918, 0px -2px 0px #704918;
+
+                color: #d6b893;
+
+                position: absolute;
+
+                top: 3px;
+
+                right: 14%;
+
+                font-size: 25px;
+
+                z-index: 2;
+
+            }
+
+
+            .boosts-active-list {
+                position: absolute;
+                display: flex;
+                align-items: center;
+                top: 76px;
+                left: 8%;
+                z-index: 8;
+            }
+
+            .boosts-active-item {
+                position: relative;
+                margin-right: 10px;
+            }
+
+            .boosts-active-item img {
+                height: 10vw;
+                width: auto;
+            }
+
+            .boosts-active-item::after {
+                content: "";
+                position: absolute;
+                width: 13vw;
+                height: 13vw;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                top: 50%;
+                z-index: -1;
+                background: url(img/ui/upgrade/boosts/glow_2.png);
+                background-size: 100% 100%;
+                opacity: 0.4;
+            }
+
+            .boosts-active-item::before {
+                content: "";
+                position: absolute;
+                width: 12vw;
+                height: 12vw;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                top: 50%;
+                z-index: -1;
+                background: url(img/ui/upgrade/boosts/glow_1.png);
+                background-size: 100% 100%;
+                opacity: 0.4;
+            }
+
+
+            .bottom-bg-btns,
+            .counter-fon,
+            .energy-bar {
+
+                z-index: 10;
+
+            }
+
+
+            .bottom-bg-btns {
+
+                aspect-ratio: 295 / 61;
+
+                width: 95%;
+
+                position: fixed;
+
+                bottom: 10px;
+
+                background: url(img/ui/menu.png) 0px 0px no-repeat;
+
+                background-size: 100% auto;
+            }
+
+            .bottom-btns {
+
+                height: 18vw;
+
+                display: inline-block;
+
+            }
+
+
+            .upgrade {
+
+                width: 29%;
+
+            }
+
+
+            .quests {
+
+                width: 20%;
+
+            }
+
+
+            .guild {
+
+                width: 22%;
+
+            }
+
+
+            .profile {
+
+                width: 24%;
+
+            }
+
+
+            .hit {
+                --translateX: 0px;
+                --translateY: 0px;
+                display: flex;
+                align-items: center;
+                position: absolute;
+                transform: translate(var(--translateX), var(--translateY));
+                gap: 1px;
+
+                height: 6.5vw;
+
+                animation: hit_play 1s linear forwards;
+                z-index: -1;
+            }
+
+            .hit::before {
+                content: "";
+                width: 3.2vw;
+                height: 3.2vw;
+                background: url(img/hits/plus.png);
+                background-size: 100% 100%;
+            }
+
+            .hit img {
+                max-height: 100%;
+            }
+
+
+            .modal-profile-photo {
+
+                background: url(https://sneg.top/uploads/posts/2023-06/1687465256_sneg-top-p-medved-na-avatarku-v-vatsap-dlya-muzhchin-10.jpg) 0px 0px no-repeat;
+
+                background-size: 100%;
+
+                /* position: absolute; */
+
+                height: 87%;
+
+                width: 70%;
+
+                top: 4px;
+
+                left: 17px;
+
+                border-radius: 6px;
+
+                box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+
+            }
+
+
+            .shake {
+
+                animation: shake 0.3s cubic-bezier(.36, .07, .19, .97) both;
+
+                transform: translate3d(0, 0, 0);
+
+                backface-visibility: hidden;
+
+                perspective: 1000px;
+
+            }
+
+
+            .clickable-area {
+
+                position: fixed;
+
+                top: 0;
+
+                left: 0;
+
+                right: 0;
+
+                bottom: 0;
+
+                z-index: 8;
+
+            }
+
+
+            .mining-overlay {
+                display: none;
+
+                position: fixed;
+
+                z-index: 9;
+
+                top: 0;
+
+                left: 0;
+
+                right: 0;
+
+                bottom: 0;
+
+            }
+
+            .mining-starttimer::after {
+                content: "";
+                position: absolute;
+                width: 108%;
+                height: 162%;
+                background: #000;
+                z-index: -1;
+                left: 50%;
+                filter: blur(9px);
+                opacity: 0.7;
+                border-radius: 49%;
+                transform: translate(-50%, -50%);
+            }
+
+
+            .mining-overlay-time {
+
+                display: none;
+
+                position: absolute;
+
+                left: 50%;
+
+                bottom: 8%;
+
+                text-wrap: nowrap;
+
+                white-space: nowrap;
+
+                transform: translateX(-45%);
+
+                font-family: SSFont;
+
+                font-size: 6vw;
+
+                text-transform: uppercase;
+
+                color: #d6b893;
+
+                -webkit-text-stroke: 1px #704918;
+
+                text-stroke: 1px #704918;
+
+            }
+
+            .mining-overlay-warning {
+                display: none;
+            }
+
+            .mining-overlay-desc {
+                position: absolute;
+                top: 79%;
+                transform: translateX(-39%);
+                left: 50%;
+                width: 49%;
+                aspect-ratio: 385 / 73;
+                background: url(img/mining_signboard/desc.png);
+                background-size: 100% auto;
+            }
+
+            .mining-overlay-boost {
+                position: absolute;
+                width: 30%;
+                top: 51%;
+                left: 24%;
+                z-index: -1;
+                aspect-ratio: 220 / 189;
+                background: url(img/mining_signboard/boost_btn.png);
+                background-size: 100% auto;
+                animation: mining_buttons 0.4s forwards;
+
+            }
+
+            .mining-overlay-start {
+                position: absolute;
+                width: 30%;
+                top: 51%;
+                left: 57%;
+                z-index: -1;
+                aspect-ratio: 220 / 189;
+                background: url(img/mining_signboard/mining_btn.png);
+                background-size: 100% auto;
+                animation: mining_buttons 0.4s forwards;
+                animation-delay: 0.2s;
+            }
+
+            @keyframes mining_buttons {
+                20% {
+                    top: 83%;
+                }
+
+                60% {
+                    top: 70%;
+                }
+
+                100% {
+                    top: 79%;
+                }
+            }
+
+
+            .mining-overlay-signboard {
+
+                top: 0;
+
+                left: 50%;
+
+                transform: translateX(-50%);
+
+                position: absolute;
+
+                width: 90vw;
+                height: 56vw;
+
+                z-index: 5;
+
+            }
+
+
+            .mining-overlay-signboard::before {
+
+                content: "";
+
+                position: absolute;
+
+                top: 0;
+
+                left: 0;
+
+                right: 0;
+
+                bottom: 0;
+
+                background: url(img/mining_signboard/signboard.gif);
+
+                background-size: 100% auto;
+
+            }
+
+
+            .mining-overlay-signboard::after {
+
+                content: "";
+
+                position: absolute;
+
+                top: 0;
+
+                left: 0;
+
+                right: 0;
+
+                bottom: 0;
+
+                background: url(img/mining_signboard/shadow.gif);
+
+                background-size: 100% auto;
+
+                opacity: 0.5;
+
+                z-index: -1;
+
+            }
+
+
+            @keyframes horizontal-shaking {
+                0% {
+                    transform: translateX(0)
+                }
+
+                25% {
+                    transform: translateX(5px)
+                }
+
+                50% {
+                    transform: translateX(-5px)
+                }
+
+                75% {
+                    transform: translateX(5px)
+                }
+
+                100% {
+                    transform: translateX(0)
+                }
+            }
+
+
+            @keyframes shake {
+
+                10%,
+                90% {
+
+                    transform: translate3d(-1px, 0, 0);
+
+                }
+
+
+                20%,
+                80% {
+
+                    transform: translate3d(2px, 0, 0);
+
+                }
+
+
+                30%,
+                50%,
+                70% {
+
+                    transform: translate3d(-4px, 0, 0);
+
+                }
+
+
+                40%,
+                60% {
+
+                    transform: translate3d(4px, 0, 0);
+
+                }
+
+            }
+
+
+            @keyframes clouds-move {
+
+                0% {
+
+                    transform: translateX(-100vw) translateZ(0);
+
+                }
+
+
+                100% {
+
+                    transform: translateX(100vw) translateZ(0);
+
+                }
+
+            }
+
+
+            @keyframes baldo_play {
+
+                100% {
+
+                    background-position: -1600%;
+
+                }
+
+            }
+
+
+            @keyframes baldo_going_sleep {
+
+                100% {
+
+                    background-position: -10948px 0;
+
+                    bottom: 120px;
+
+                    transform: scale(0.23) translateX(31%);
+
+                }
+
+            }
+
+
+            @keyframes baldo_idle_play {
+
+                100% {
+
+                    background-position: -200%;
+
+                }
+
+            }
+
+
+            @keyframes baldo_mining {
+
+                100% {
+
+                    background-position: -200%;
+
+                }
+
+            }
+
+
+            @keyframes baldo_to_mining {
+
+                100% {
+
+                    background-position: -700%;
+
+                }
+
+            }
+
+
+            @keyframes poof_play {
+
+                0% {
+
+                    opacity: 1;
+
+                }
+
+                100% {
+
+                    opacity: 0;
+
+                    display: none;
+
+                    background-position: -960px;
+
+                }
+
+            }
+
+
+            @keyframes chock_left_crack_play {
+
+                100% {
+
+                    background-position: -25056px;
+
+                }
+
+            }
+
+            @keyframes chock_right_crack_play {
+
+                100% {
+
+                    background-position: -25056px;
+
+                }
+
+            }
+
+
+            @keyframes m_baldo_right_play {
+
+                100% {
+
+                    background-position: -3780px;
+
+                }
+
+            }
+
+            @keyframes pen_play {
+
+                100% {
+
+                    background-position: -3300px;
+
+                }
+
+            }
+
+
+            @keyframes chock_infinity_play {
+
+                100% {
+
+                    background-position: -2900%;
+
+                }
+
+            }
+
+
+            @keyframes hit_play {
+                0% {
+                    opacity: 1;
+                    transform: translate(var(--translateX), var(--translateY));
+                }
+
+                15% {
+                    opacity: 1;
+                }
+
+                100% {
+                    transform: translate(calc(var(--translateX) + 100%), calc(var(--translateY) - 20vh));
+                    opacity: 0;
+                }
+
+            }
+
+            /*////////////////////////////////////////////////////////////////////////////*/
+
+
+            #profile-modal {
+                overflow: hidden;
+                border: none !important;
+                outline: none;
+                width: 85%;
+                height: 91%;
+                top: 0;
+                background: url(img/ui/profile/fon.png) 0px 0px no-repeat;
+                background-size: 100%;
+                position: relative;
+            }
+
+
+            .profile-modal-body {
+                height: 100%;
+                padding: 14% 0 0;
+                display: flex;
+                flex-wrap: wrap;
+                flex-direction: column;
+            }
+
+
+            .modal-profile-image {
+
+                margin: 0 2vw 4.5vw 0;
+
+                display: flex;
+
+                align-items: center;
+
+                justify-content: center;
+
+                height: 21vw;
+
+                aspect-ratio: 9 / 7;
+
+                background: url(img/ui/profile/profile_image.png) 0px 0px no-repeat;
+
+                background-size: 100%;
+
+            }
+
+
+            .modal-name-profile {
+                margin: 0 0 5px;
+                max-width: 100%;
+                width: 100%;
+                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                position: relative;
+            }
+
+
+            .modal-name-profile > username {
+
+                font-size: 9vw;
+
+                color: #d6b893;
+
+                -webkit-text-stroke: 1.8px #704918;
+
+                text-stroke: 1.8px #704918;
+
+            }
+
+
+            .modal-points-earnings {
+                margin: -0.6vw 0 0;
+                color: #704918;
+                font-size: 3vw;
+                opacity: 0.6;
+                white-space: nowrap;
+            }
+
+            .modal-points-earnings::before {
+                content: "total earned: ";
+            }
+
+            .modal-referral-link {
+
+                position: relative;
+
+                margin: 0 0 10px;
+
+                width: 100%;
+
+                aspect-ratio: 1448 / 297;
+
+                background: url(img/ui/profile/referral_link-v1.png) 0px 0px no-repeat;
+
+                background-size: 100% auto;
+
+                display: flex;
+                box-sizing: border-box;
+
+                align-items: center;
+
+                justify-content: center;
+                flex-direction: column;
+
+            }
+
+            .modal-referral-preloader {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .modal-referral-link-wrap {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                left: 0;
+                top: 0;
+            }
+
+            .modal-referral-counter {
+                margin: 1.3vw 0 0;
+                font-size: 5.4vw;
+                color: rgba(104, 64, 35, 0.83);
+            }
+
+            .modal-referral-link-desc {
+                color: rgba(104, 64, 35, 0.36);
+                font-size: 3vw;
+            }
+
+            .modal-referral-info {
+
+                position: absolute;
+
+                top: 0;
+
+                right: -1.5vw;
+
+                width: 9vw;
+
+                height: 9vw;
+
+                z-index: 5;
+
+            }
+
+            .modal-referral-earnings {
+                position: relative;
+                width: 100%;
+                aspect-ratio: 720 / 101;
+                background: url(img/ui/profile/referral_earnings.png) 0px 0px no-repeat;
+                background-size: 100% auto;
+            }
+
+            .modal-referral-earnings div {
+                width: 28.8vw;
+                top: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transform: translateY(-50%);
+                right: 1.5vw;
+                aspect-ratio: 242 / 75;
+                position: absolute;
+                background: url(img/ui/profile/die_numbers.png) 0px 0px no-repeat;
+                background-size: 100%;
+                font-size: 5.7vw;
+                color: #d6b893;
+                -webkit-text-stroke: 1px #704918;
+            }
+
+
+            .modal-referral-list {
+                box-sizing: border-box;
+                padding-right: 1.5vw;
+                flex: 1;
+                margin: 10px 0 16vh;
+                overflow-y: auto;
+            }
+
+            .modal-referral-list::-webkit-scrollbar {
+                width: 2vw;
+            }
+
+            .modal-referral-list::-webkit-scrollbar-track {
+                background: url(img/ui/profile/scrollbar.png);
+                background-size: 100% 100%;
+                border-radius: 100px;
+            }
+
+            .modal-referral-list::-webkit-scrollbar-thumb {
+                background: url(img/ui/profile/scroll_thumb.png) no-repeat;
+                background-position: auto 100%;
+                background-clip: padding-box;
+                border: 1px solid transparent;
+                border-radius: 100px;
+            }
+
+            .modal-referral-item {
+                margin: 0 0 7px;
+                aspect-ratio: 103 / 19;
+                background: url(img/ui/profile/rating_item.png);
+                background-size: 100% auto;
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                padding-left: 17.9vw;
+            }
+
+            .modal-referral-item-user {
+                margin: -1.3vw 0 0;
+                font-size: 5.3vw;
+                color: #d6b893;
+                -webkit-text-stroke: 1px #704918;
+            }
+
+            .modal-referral-item-earned {
+                margin: -0.5vw 0 0;
+                font-size: 2.8vw;
+                color: #704918;
+            }
+
+            .modal-referral-item-earned::after {
+                content: " points earned";
+            }
+
+            .modal-nazad {
+
+                height: 18.7vw;
+
+                width: 17.35%;
+
+                left: 0%;
+
+                aspect-ratio: 139 / 162;
+
+                position: absolute;
+
+                bottom: 0px;
+
+                background: url(img/ui/profile/nazad.png) 0px 0px no-repeat;
+
+                background-size: contain;
+
+                overflow: visible;
+
+            }
+
+            .modal-profile-btn-profile {
+
+                height: 18.7vw;
+
+                left: 20%;
+
+                aspect-ratio: 306 / 163;
+
+                position: absolute;
+
+                bottom: 0px;
+
+                background: url(img/ui/profile/btns/profile_active.png) 0px 0px no-repeat;
+
+                background-size: 100% auto;
+
+                overflow: visible;
+
+
+            }
+
+            .modal-profile-btn-settings {
+
+                height: 18.7vw;
+
+                aspect-ratio: 306 / 163;
+
+                left: 61.7%;
+
+                position: absolute;
+
+                bottom: 0px;
+
+                background: url(img/ui/profile/btns/settings_passive.png) 0px 0px no-repeat;
+
+                background-size: 100% auto;
+
+                overflow: visible;
+
+            }
+
+
+            .settings-modal-body {
+                padding: 11% 0 0;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+
+            .modal-settings-btn-profile {
+
+                width: 100%;
+
+                left: 19.3%;
+
+                height: 75px;
+
+                position: absolute;
+
+                bottom: 0px;
+
+                background: url(img/ui/profile/btns/profile_passive.png) 0px 0px no-repeat;
+
+                background-size: 40%;
+
+                overflow: visible;
+
+            }
+
+            .modal-settings-btn-settings {
+
+                width: 100%;
+
+                top: 87%;
+
+                left: 59%;
+
+                height: 75px;
+
+                position: absolute;
+
+                background: url(img/ui/profile/btns/settings_active.png) 0px 0px no-repeat;
+
+                background-size: 40%;
+
+                overflow: visible;
+
+            }
+
+
+            .modal-settings-music {
+
+                margin: 0 0 10px;
+
+                position: relative;
+
+                width: 100%;
+
+                aspect-ratio: 720 / 101;
+
+                background: url(img/ui/settings/music.png) 0px 0px no-repeat;
+
+                background-size: 100%;
+
+            }
+
+            .modal-settings-music > .music-switch {
+                width: 28.8vw;
+                top: 50%;
+                transform: translateY(-50%);
+                right: 1.5vw;
+
+                aspect-ratio: 122 / 37;
+
+                position: absolute;
+
+                background: url(img/ui/settings/switch_on.png) 0px 0px no-repeat;
+
+                background-size: 100%;
+
+            }
+
+
+            .modal-settings-vibration {
+
+                margin: 0 0 10px;
+
+                position: relative;
+
+                width: 100%;
+
+                aspect-ratio: 720 / 101;
+
+                background: url(img/ui/settings/vibration.png) 0px 0px no-repeat;
+
+                background-size: 100%;
+
+            }
+
+            .modal-settings-clip {
+                margin: 0 0 10px;
+
+                position: relative;
+
+                width: 100%;
+
+                aspect-ratio: 720 / 101;
+
+                background: url(img/ui/settings/clip.png) 0px 0px no-repeat;
+
+                background-size: 100%;
+            }
+
+            .modal-settings-clip > .clip-switch {
+
+                width: 28.8vw;
+                top: 50%;
+                transform: translateY(-50%);
+                right: 1.5vw;
+
+                aspect-ratio: 122 / 37;
+
+                position: absolute;
+
+                background: url(img/ui/settings/switch_on.png) 0px 0px no-repeat;
+
+                background-size: 100%;
+
+            }
+
+            .modal-settings-vibration > .vibration-switch {
+
+                width: 28.8vw;
+                top: 50%;
+                transform: translateY(-50%);
+                right: 1.5vw;
+
+                aspect-ratio: 122 / 37;
+
+                position: absolute;
+
+                background: url(img/ui/settings/switch_on.png) 0px 0px no-repeat;
+
+                background-size: 100%;
+
+            }
+
+
+            .modal-settings-language {
+
+                margin: 0 0 13px;
+
+                position: relative;
+
+                width: 100%;
+
+                aspect-ratio: 720 / 101;
+
+                background: url(img/ui/settings/language.png) 0px 0px no-repeat;
+
+                background-size: 100%;
+
+            }
+
+
+            .modal-settings-wiki {
+                width: 30vw;
+                aspect-ratio: 242 / 75;
+                background: url(img/ui/settings/wiki.png) 0px 0px no-repeat;
+                background-size: 100% auto;
+                margin: 0 2.5vw 0 0;
+
+            }
+
+            .modal-settings-help {
+                width: 30vw;
+                aspect-ratio: 482 / 149;
+                background: url(img/ui/settings/help.png) 0px 0px no-repeat;
+                background-size: 100% auto;
+            }
+
+            /*//////////////////////////////////////////////////////////////////////////////////////////*/
+
+
+            #wiki-modal {
+                min-height: 100%;
+                min-width: 100%;
+                margin: 0;
+                padding: 0;
+                border: 0;
+                outline: 0;
+                background: #f9f9f9;
+            }
+
+
+            .wiki-modal-slide {
+
+                display: none;
+
+                position: absolute;
+
+                left: 0;
+
+                top: 0;
+
+                width: 100%;
+
+                height: 100%;
+
+                background-repeat: no-repeat;
+
+                background-position: center;
+
+                background-size: contain;
+
+            }
+
+
+            .wiki-modal-slide.active {
+
+                display: block;
+
+            }
+
+            .wiki-modal-timeline {
+                position: absolute;
+                top: 4vw;
+                left: 50%;
+                z-index: 5;
+                transform: translateX(-50%);
+                width: 92%;
+                height: 5px;
+                display: flex;
+            }
+
+            .wiki-modal-timeline-item {
+                margin-right: 7px;
+                outline: 2px solid #d6b893;
+                border-radius: 16px;
+                flex: 1;
+                overflow: hidden;
+            }
+
+            .wiki-modal-timeline-item.active .wiki-modal-timeline-progress {
+                width: 100%;
+                transition: width 10s linear;
+            }
+
+            .wiki-modal-timeline-progress {
+                height: 100%;
+                width: 0;
+                background: #684023;
+            }
+
+            .wiki-modal-timeline-item:last-child {
+                margin: 0;
+            }
+
+
+            .wiki-modal-btn {
+
+                position: absolute;
+
+                width: 50%;
+
+                height: 100%;
+
+                z-index: 1;
+
+                top: 0;
+
+            }
+
+
+            .wiki-modal-btn-prev {
+
+                left: 0;
+
+            }
+
+
+            .wiki-modal-btn-next {
+
+                right: 0;
+
+            }
+
+            /*//////////////////////////////////////////////////////////////////////////////////////////*/
+
+            /*//////////////////////////////////////////////////////////////////////////////////////////*/
+
+            #guild-modal {
+
+                font-family: 'SSFont';
+
+                border: none !important;
+
+                outline: none;
+
+                width: 100%;
+
+                height: 100%;
+
+                background: url(img/ui/squads/fon.png) 0px 0px no-repeat;
+
+                background-size: 100% 98%;
+
+                position: relative;
+
+            }
+
+
+            .modal-guild-main-btns {
+
+                margin-left: auto;
+
+                margin-right: auto;
+
+                height: 83px;
+
+                width: 81%;
+
+                position: sticky;
+
+                left: 19px;
+
+            }
+
+
+            .modal-guild-first {
+
+                position: relative;
+
+                top: 72px;
+
+                left: 6px;
+
+            }
+
+
+            .join-squad {
+
+                background: url(img/ui/squads/join_squad/join_clan.png) 0px 0px no-repeat;
+
+                background-size: 100%;
+
+            }
+
+
+            .create-squad {
+
+                background: url(img/ui/squads/join_squad/create_clan_avalible.png) 0px 0px no-repeat;
+
+                background-size: 100%;
+
+            }
+
+
+            .create-squad.closed {
+
+                background-image: url(img/ui/squads/join_squad/create_clan_closed.png);
+
+            }
+
+
+            .modal-guild-create {
+
+                position: relative;
+
+                top: 72px;
+
+                left: 6px;
+
+            }
+
+
+            .input-name-squad {
+
+                padding: 0;
+
+                margin-bottom: 10px;
+
+                display: block;
+
+                font-family: "SSFont";
+
+                font-size: 9vw;
+
+                color: #d6b893;
+
+                -webkit-text-stroke: 2px #704918;
+
+                text-stroke: 2px #704918;
+
+                background: url(img/ui/squads/create_squad/clan_name_input.png) 0px 0px no-repeat;
+
+                background-size: 100% 100%;
+
+                text-align: center;
+
+                width: 270px;
+
+                height: 69px;
+
+                border: 0;
+
+            }
+
+
+            .input-name-squad::placeholder {
+
+                color: #d6b893;
+
+                -webkit-text-stroke: 2px #704918;
+
+                text-stroke: 2px #704918;
+
+            }
+
+
+            .input-name-squad:focus {
+
+                outline: 0;
+
+            }
+
+
+            .caution-squad {
+
+                background: url(img/ui/squads/create_squad/caution.png) 0px 0px no-repeat;
+
+                background-size: contain;
+
+                margin-bottom: 10px;
+
+                width: 60vw;
+
+                height: auto;
+
+                aspect-ratio: 397 / 45;
+
+            }
+
+
+            .input-image-squad {
+
+                display: block;
+
+                background: url(img/ui/squads/create_squad/upload_squad_photo.png) 0px 0px no-repeat;
+
+                background-size: 100% auto;
+
+                width: 150px;
+
+                height: auto;
+
+                content-visibility: hidden;
+
+                font-size: 0;
+
+                aspect-ratio: 271 / 242;
+
+            }
+
+
+            #avatar-clan-upload {
+
+                opacity: 0;
+
+                position: absolute;
+
+                appearance: none;
+
+            }
+
+
+            .btn-create-squad {
+
+                background: url(img/ui/squads/create_squad/create_clan.png) 0px 0px no-repeat;
+
+                background-size: contain;
+
+                width: 175px;
+
+                height: 72px;
+
+                margin-top: 12px;
+
+            }
+
+            /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+
+            .modal-guild-panel {
+            }
+
+
+            .squad-panel-wrapper {
+
+                display: flex;
+
+                flex-wrap: wrap;
+
+                justify-content: center;
+
+                margin: 10vh 8vw 0 12vw;
+
+            }
+
+
+            .squad-panel-logo {
+
+                margin-right: 10px;
+
+                width: 30%;
+
+                aspect-ratio: 1 / 1;
+
+                background: url(img/ui/squads/panel_squad/squad_logo.png);
+
+                background-size: 100% 100%;
+
+                border-radius: 25px;
+
+                object-fit: contain;
+
+            }
+
+
+            .squad-panel-header {
+
+                background: url(img/ui/squads/panel_squad/clan_name_block.png);
+
+                background-size: 100% 100%;
+
+                flex: 1;
+
+                padding-left: 7vw;
+
+                display: flex;
+
+                justify-content: center;
+
+                flex-direction: column;
+
+            }
+
+
+            .squad-panel-number {
+
+                color: #916946;
+
+            }
+
+
+            .squad-panel-name {
+
+                margin: -4px 0;
+
+                color: #d6b893;
+
+                -webkit-text-stroke: 2px #704918;
+
+                text-stroke: 2px #704918;
+
+                font-size: 10vw;
+
+            }
+
+
+            .squad-panel-count {
+
+                font-size: 14px;
+
+                color: #704918;
+
+            }
+
+
+            .squad-panel-earnings {
+
+                width: 100%;
+
+                aspect-ratio: 675 / 94;
+
+                margin: 2vw 0;
+
+                background: url(img/ui/squads/panel_squad/earnings.png) no-repeat;
+
+                background-size: 100% auto;
+
+                color: #d6b893;
+
+                -webkit-text-stroke: 2px #704918;
+
+                text-stroke: 2px #704918;
+
+            }
+
+
+            .leaderboard-squad-panel {
+
+                position: relative;
+
+                width: 90%;
+
+                padding: 9vw 10px 0;
+
+                margin-top: 10px;
+
+                background: url(img/ui/squads/panel_squad/leaderboard_background.png);
+
+                background-size: 100% 100%;
+
+                border-radius: 16px;
+
+            }
+
+
+            .leaderboard-squad-heading {
+
+                position: absolute;
+
+                width: 60%;
+
+                background: url(img/ui/squads/panel_squad/leaderboard_plaque.png) no-repeat;
+
+                aspect-ratio: 361 / 85;
+
+                top: -10px;
+
+                left: 50%;
+
+                transform: translateX(-50%);
+
+                padding-top: 7px;
+
+                display: flex;
+
+                justify-content: center;
+
+                text-transform: uppercase;
+
+                font-size: 20px;
+
+                color: #704918;
+
+                background-size: 100% auto;
+
+            }
+
+
+            .leaderboard-squad-item {
+
+                display: flex;
+
+                align-items: center;
+
+                padding: 0 20px;
+
+                height: 10vw;
+
+                margin-bottom: 1vw;
+
+                background: url(img/ui/squads/panel_squad/leaderboard_item.png);
+
+                background-size: 100% 100%;
+
+                border-radius: 100px;
+
+            }
+
+
+            .leaderboard-squad-item:last-child {
+
+                margin: 10px -10px 0;
+
+                padding: 0 5px;
+
+                background: none;
+
+                border-radius: 16px;
+
+            }
+
+
+            .leaderboard-squad-number {
+
+                font-size: 7vw;
+
+                margin-right: 10px;
+
+                color: #d6b893;
+
+                -webkit-text-stroke: 2px #704918;
+
+                text-stroke: 2px #704918;
+
+            }
+
+
+            .leaderboard-squad-avatar {
+
+                height: 80%;
+
+                aspect-ratio: 1 / 1;
+
+                margin-right: 10px;
+
+                outline: 1px solid #704918;
+
+                border-radius: 50%;
+
+            }
+
+
+            .leaderboard-squad-name {
+
+                font-size: 4.5vw;
+
+                text-transform: uppercase;
+
+                color: #d6b893;
+
+                -webkit-text-stroke: 1px #704918;
+
+                text-stroke: 1px #704918;
+
+            }
+
+
+            .leaderboard-squad-text {
+
+                margin: -2px 0 0;
+
+                font-size: 3vw;
+
+                color: #704918;
+
+            }
+
+
+            .squad-panel-invite-link {
+
+                background: url(img/ui/squads/panel_squad/clan_invite.png) 0px 0px no-repeat;
+
+                background-size: 100% auto;
+
+                margin-top: 12px;
+
+                width: 90%;
+
+                aspect-ratio: 641 / 75;
+
+            }
+
+            .squad-panel-leave-btn {
+
+                background: url(img/ui/squads/panel_squad/leave_squad_btn.png) 0px 0px no-repeat;
+
+                background-size: 100% auto;
+
+                width: 70%;
+
+                aspect-ratio: 239 / 28;
+
+                margin: 5vw 0 0;
+
+            }
+
+
+            .modal-guild-list {
+
+                padding: 15vh 8vw 0 11.5vw;
+
+            }
+
+
+            .squad-list-container {
+
+                height: 60vh;
+
+                overflow-y: scroll;
+
+            }
+
+
+            .squad-list-container::-webkit-scrollbar {
+
+                display: none;
+
+            }
+
+
+            .squad-list-item {
+
+                margin: 0 0 8px;
+
+                height: 13vw;
+
+                padding: 8px 2vw;
+
+                display: flex;
+
+                align-items: center;
+
+                background: url(img/ui/squads/squads_list/item_background.png);
+
+                background-size: 100% 100%;
+
+            }
+
+
+            .squad-list-ava {
+
+                height: 100%;
+
+                border-radius: 25px;
+
+                aspect-ratio: 1 / 1;
+
+                margin-right: 6px;
+
+            }
+
+
+            .squad-list-info {
+
+                flex: 1;
+
+            }
+
+
+            .squad-list-name {
+
+                font-size: 4.9vw;
+
+                text-transform: uppercase;
+
+                color: #d6b893;
+
+                -webkit-text-stroke: 1px #704918;
+
+                text-stroke: 1px #704918;
+
+            }
+
+
+            .squad-list-text {
+
+                margin: -4px 0 1px;
+
+                font-size: 2.8vw;
+
+                text-transform: uppercase;
+
+                color: #d6b893;
+
+                text-shadow: 1px 0px 0px #704918, -1px 0px 0px #704918, 0px 1px 0px #704918, 0px -1px 0px #704918;
+
+            }
+
+
+            .squad-list-count {
+
+                font-size: 2.6vw;
+
+                color: #704918;
+
+                text-transform: uppercase;
+
+            }
+
+
+            .squad-list-heading {
+
+                position: absolute;
+
+                width: 42vw;
+
+                top: 6vh;
+
+                left: 50%;
+
+                font-size: 10vw;
+
+                transform: translateX(-50%);
+
+                background: url(img/ui/squads/squads_list/clans.png);
+
+                background-size: 100% auto;
+
+                aspect-ratio: 382 / 139;
+
+            }
+
+
+            .squad-list-btn-join {
+
+                width: 20vw;
+
+                margin-left: auto;
+
+                background: url(img/ui/squads/squads_list/join.png);
+
+                background-size: 100% auto;
+
+                aspect-ratio: 37 / 15;
+
+            }
+
+
+            #quests-modal {
+
+                font-family: 'SSFont';
+
+                border: none !important;
+
+                outline: none;
+
+                width: 86%;
+
+                height: 100%;
+
+                background: url(img/ui/quests/fon.png) 0px 0px no-repeat;
+
+                background-size: 100% 98%;
+
+                position: relative;
+
+            }
+
+
+            .modal-quests-close,
+            .modal-guild-close {
+
+                width: 16vw;
+
+                height: 16vw;
+
+                position: absolute;
+
+                top: 0;
+
+                right: 0;
+
+            }
+
+
+            .modal-quests-btn-nazad,
+            .modal-guild-btn-nazad {
+
+                width: 13%;
+
+                bottom: 10px;
+
+                aspect-ratio: 139 / 162;
+
+                left: 0;
+
+
+                position: absolute;
+
+                background: url(img/ui/profile/nazad.png) 0px 0px no-repeat;
+
+                background-size: 100% auto;
+
+                overflow: visible;
+
+            }
+
+            .modal-quests-btn-daily {
+
+                width: 28%;
+
+                bottom: 10px;
+
+                aspect-ratio: 222 / 127;
+
+                left: 14%;
+
+                position: absolute;
+
+                background: url(img/ui/quests/btns/daily_passive.png) 0px 0px no-repeat;
+
+                background-size: 100% auto;
+
+            }
+
+            .modal-quests-btn-daily.disabled {
+                background-image: url(img/ui/quests/btns/daily_disabled.png);
+            }
+
+
+            .modal-quests-btn-daily.active {
+
+                background-image: url(img/ui/quests/btns/daily_active.png);
+
+            }
+
+
+            .modal-quests-btn-weekly {
+
+                width: 28%;
+
+                bottom: 10px;
+
+                aspect-ratio: 222 / 127;
+
+                left: 43%;
+
+                position: absolute;
+
+                background: url(img/ui/quests/btns/weekly_passive.png) 0px 0px no-repeat;
+
+                background-size: 100% auto;
+
+            }
+
+            .modal-quests-btn-weekly.disabled {
+                background-image: url(img/ui/quests/btns/weekly_disabled.png);
+            }
+
+            .modal-quests-btn-weekly.active {
+
+                background-image: url(img/ui/quests/btns/weekly_active.png);
+
+            }
+
+
+            .modal-quests-btn-main {
+
+                width: 28%;
+
+                bottom: 10px;
+
+                aspect-ratio: 222 / 127;
+
+                left: 72%;
+
+                position: absolute;
+
+                background: url(img/ui/quests/btns/main_passive.png) 0px 0px no-repeat;
+
+                background-size: 100% auto;
+
+            }
+
+
+            .modal-quests-btn-main.active {
+
+                background-image: url(img/ui/quests/btns/main_active.png);
+
+            }
+
+
+            .modal-quests-list {
+                outline: 0;
+                box-sizing: border-box;
+                position: relative;
+                overflow-y: auto;
+                height: 69vh;
+                margin: 22vw 0 0;
+                padding: 0 5vw 0 3vw;
+            }
+
+
+            .modal-quests-item {
+                position: relative;
+
+                height: 18vw;
+
+                padding: 5px 10px;
+
+                margin: 0 0 10px;
+
+                background: url(img/ui/quests/item/item_background.png);
+
+                background-size: 100% 100%;
+
+                display: flex;
+
+                align-items: center;
+
+                outline: 0;
+            }
+
+            .modal-quests-item-wrapper {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+
+            .modal-quests-item-link-wrap {
+                position: absolute;
+                z-index: 2;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+
+
+            .modal-quests-item-completed .modal-quests-item-btn {
+
+                background-image: url(img/ui/quests/item/task_completed.png) !important;
+                font-size: 0;
+                z-index: 2;
+
+            }
+
+            .modal-quests-item-completed .modal-quests-item-reward {
+                display: none;
+            }
+
+            .modal-quests-item-check .modal-quests-item-btn {
+                position: relative;
+                z-index: 3;
+                background-image: url(img/ui/quests/item/check_task.png);
+                font-size: 0;
+            }
+
+
+            .modal-quests-item-img {
+
+                height: 75%;
+
+                aspect-ratio: 1 / 1;
+                object-fit: contain;
+
+                margin-right: 10px;
+
+            }
+
+
+            .modal-quests-item-text {
+
+                margin: 2vw 0 5px;
+
+                text-transform: uppercase;
+
+                font-size: 3.5vw;
+
+                color: #d6b893;
+
+                -webkit-text-stroke: 1px #704918;
+
+                text-stroke: 1px #704918;
+
+            }
+
+
+            .modal-quests-item-btn {
+                position: relative;
+                margin: auto 0 2vw;
+
+                display: block;
+
+                width: 38vw;
+
+                aspect-ratio: 302 / 41;
+
+                background: url(img/ui/quests/item/complete_task.png) no-repeat;
+
+                background-size: 100% 100%;
+
+
+                font-size: 4vw;
+                color: #3f240c;
+            }
+
+            .modal-quests-item-btn::after {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 110%;
+                height: 203%;
+            }
+
+            .modal-quests-item-reward {
+                position: absolute;
+                top: 0;
+                right: 0;
+                transform: translateX(21%) translateY(-46%) rotate(9deg);
+                background: url(img/ui/quests/item/reward_bg.png);
+                background-size: 100% 100%;
+                outline: 1px solid #3f240c;
+                padding: 0.8vw 2vw;
+                font-size: 2.8vw;
+                color: #3f240c;
+                border-radius: 2vw;
+            }
+
+
+            /*//////////////////////////////////////////////////////////////////////////////////////////*/
+
+            /*//////////////////////////////////////////////////////////////////////////////////////////*/
+
+            /*//////////////////////////////////////////////////////////////////////////////////////////*/
+
+
+            #upgrade-modal {
+
+                font-family: 'SSFont';
+
+                border: none !important;
+
+                outline: none;
+
+                width: 100%;
+
+                height: 100%;
+
+                background: url(img/ui/upgrade/fon.png) 0px 0px no-repeat;
+
+                background-size: 100% 98%;
+
+                position: relative;
+
+            }
+
+
+            .boosts-modal-body {
+
+                top: 40px;
+
+                position: relative;
+
+            }
+
+            .popup-confirm-boost-close {
+                top: 0;
+                right: 0;
+                width: 100px;
+                height: 100px;
+                position: absolute;
+            }
+
+            .popup-confirm-boost-available {
+                position: absolute;
+                top: 75%;
+                left: 50%;
+                font-size: 1.8vw;
+                transform: translateX(-50%);
+                color: #231c15;
+                mix-blend-mode: multiply;
+                opacity: 0.38;
+            }
+
+
+            .popup-confirm-boost {
+                width: 100%;
+                background-size: 100% auto;
+                aspect-ratio: 450 / 247;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+
+            .popup-confirm-boost-close-overlay {
+                position: absolute;
+                z-index: -1;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+            }
+
+
+            .popup-confirm-boost-confirm {
+                bottom: -5%;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 39vw;
+                height: 63px;
+                position: absolute;
+            }
+
+
+            .modal-boosts {
+
+                margin-left: auto;
+
+                margin-right: auto;
+
+                width: 92%;
+
+                aspect-ratio: 755 / 238;
+
+                position: sticky;
+
+                background-position: 0 0;
+
+                background-repeat: no-repeat;
+
+                background-size: 100% auto;
+
+            }
+
+            .boost-bone {
+
+                background-image: url(img/ui/upgrade/boosts/bone.png);
+
+            }
+
+            .boost-coffee {
+
+                background-image: url(img/ui/upgrade/boosts/coffee.png);
+
+            }
+
+            .boost-energy-drink {
+
+                background-image: url(img/ui/upgrade/boosts/energy_drink.png);
+
+            }
+
+            .boost-steak {
+
+                background-image: url(img/ui/upgrade/boosts/steak.png);
+
+            }
+
+
+            .boosts-ebaldo-wrap,
+            .upgrades-ebaldo-wrap {
+
+                box-sizing: border-box;
+
+                padding: 0 3vw;
+
+                min-width: 18vw;
+
+                height: 7vw;
+
+                position: absolute;
+
+                display: flex;
+
+                align-items: center;
+
+                justify-content: center;
+
+                right: 8%;
+
+                background: url(img/ui/upgrade/price.png);
+
+                background-size: 100% 100%;
+
+            }
+
+
+            .boosts-ebaldo-wrap {
+
+                bottom: 5%;
+
+            }
+
+
+            .boosts-ebaldo-wrap.not,
+            .upgrades-ebaldo-wrap.not {
+
+                background-image: url(img/ui/upgrade/price_not.png);
+
+            }
+
+            .boosts-ebaldo-wrap.unavailable,
+            .upgrades-ebaldo-wrap.unavailable {
+
+                background-image: url(img/ui/upgrade/price_unavailable.png) !important;
+
+            }
+
+
+            .boosts-ebaldo {
+
+                font-size: 2.3vw;
+
+                color: #231c15;
+
+                opacity: 0.7;
+
+                mix-blend-mode: multiply;
+
+            }
+
+            .boosts-ebaldo::after {
+                content: " points";
+            }
+
+
+            .boosts-available {
+
+                position: absolute;
+
+                left: 32.2%;
+
+                bottom: 27%;
+
+                mix-blend-mode: multiply;
+
+                color: #704918;
+
+                font-size: 2vw;
+
+            }
+
+
+            .upgrades-modal-body {
+
+                top: 40px;
+
+                position: relative;
+
+            }
+
+
+            .modal-boosts-unavailable,
+            .modal-upgrades-unavailable {
+
+                position: sticky;
+
+                margin: 0 auto;
+
+                background-repeat: no-repeat;
+
+                background-size: contain;
+
+                mix-blend-mode: multiply;
+
+            }
+
+
+            .modal-upgrades-unavailable {
+
+                background-image: url(img/ui/upgrade/upgrades/unavailable_message.png);
+
+                width: 77%;
+
+                aspect-ratio: 625 / 57;
+
+            }
+
+
+            .modal-boosts-unavailable {
+
+                background-image: url(img/ui/upgrade/boosts/unavailable_message.png);
+
+                width: 70%;
+
+                aspect-ratio: 173 / 19;
+
+            }
+
+
+            .modal-upgrades {
+
+                width: 92%;
+
+                margin: 0 auto;
+
+                position: sticky;
+
+                aspect-ratio: 54 / 17;
+
+            }
+
+
+            .upgrades-axe {
+
+                background: url(img/ui/upgrade/upgrades/axe.png) 0px 0px no-repeat;
+
+                background-size: 100%;
+
+            }
+
+            .modal-upgrades-axe-animate {
+
+                width: 21vw;
+
+                left: 4vw;
+
+                top: 50%;
+
+                aspect-ratio: 30 / 23;
+
+                transform: translateY(-60%);
+
+                position: absolute;
+
+                background: url(img/ui/upgrade/upgrades/axe.gif) 0px 0px no-repeat;
+
+                background-size: 100%;
+
+            }
+
+
+            .upgrades-energy {
+
+                background: url(img/ui/upgrade/upgrades/energy.png) 0px 0px no-repeat;
+
+                background-size: 100%;
+
+            }
+
+
+            .modal-upgrades-energy-animate {
+
+                width: 12vw;
+
+                left: 9vw;
+
+                top: 50%;
+
+                transform: translateY(-46%);
+
+                aspect-ratio: 300 / 403;
+
+                position: absolute;
+
+                background: url(img/ui/upgrade/upgrades/energy.gif) 0px 0px no-repeat;
+
+                background-size: 85%;
+
+            }
+
+
+            .upgrades-mining {
+
+                background: url(img/ui/upgrade/upgrades/mining.png) 0px 0px no-repeat;
+
+                background-size: 100%;
+
+            }
+
+            .modal-upgrades-mining-animate {
+
+                width: 15vw;
+
+                left: 6vw;
+
+                top: 50%;
+
+                transform: translateY(-53%);
+
+                position: absolute;
+
+                background: url(img/ui/upgrade/upgrades/mining.gif) 0px 0px no-repeat;
+
+                background-size: 100%;
+
+                aspect-ratio: 1 / 1;
+
+            }
+
+            .upgrades-lvl {
+
+                position: absolute;
+
+                top: 23.2%;
+
+                padding: 1vw 2vw;
+
+                font-size: 2.2vw;
+
+                color: rgba(12, 7, 3, 0.6);
+
+                background: url(img/ui/upgrade/upgrades/level.png);
+
+                background-size: 100% 100%;
+
+            }
+
+
+            .upgrades-axe .upgrades-lvl {
+
+                left: 47.1%;
+
+            }
+
+
+            .upgrades-energy .upgrades-lvl {
+
+                left: 58.8%;
+
+            }
+
+
+            .upgrades-mining .upgrades-lvl {
+
+                left: 58.9%;
+
+            }
+
+            .upgrades-ebaldo {
+
+                font-size: 2.3vw;
+
+                color: #231c15;
+
+                opacity: 0.7;
+
+                mix-blend-mode: multiply;
+
+            }
+
+            .upgrades-ebaldo::after {
+                content: " points";
+            }
+
+
+            .upgrades-ebaldo-wrap {
+
+                bottom: 5%;
+
+            }
+
+
+            .modal-upgrade-btn-nazad {
+
+                height: 18.7vw;
+
+                bottom: 2.6%;
+
+                left: 4.1%;
+
+                aspect-ratio: 139 / 162;
+
+                position: absolute;
+
+                background: url(img/ui/upgrade/btns/nazad.png) 0px 0px no-repeat;
+
+                background-size: 100%;
+
+                overflow: visible;
+
+            }
+
+            .modal-upgrade-btn-upgrades {
+
+                height: 18.7vw;
+
+                bottom: 2.6%;
+
+                left: 22.6%;
+
+                aspect-ratio: 321 / 169;
+
+                position: absolute;
+
+                background: url(img/ui/upgrade/btns/upgrades_active.png) 0px 0px no-repeat;
+
+                background-size: 100%;
+
+            }
+
+            .modal-upgrade-btn-boosts {
+
+                height: 18.7vw;
+
+                aspect-ratio: 321 / 169;
+
+                bottom: 2.6%;
+
+                left: 61%;
+
+                position: absolute;
+
+                background: url(img/ui/upgrade/btns/boosts_passive.png) 0px 0px no-repeat;
+
+                background-size: 100%;
+            }
+
+            .not-supported {
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                display: none;
+                align-items: center;
+                justify-content: center;
+                z-index: 200;
+                background: url(img/ui/loading/background.jpg) no-repeat;
+                background-size: cover;
+                background-color: #3a461f;
+                color: #d6b893;
+                font-size: 10vw;
+                -webkit-text-stroke: 2px #704918;
+                text-stroke: 2px #704918;
+                text-align: center;
+            }
+
+            .orientation-warning {
+                min-width: 100%;
+                min-height: 100%;
+                border: 0;
+                outline: 0;
+                margin: 0;
+                padding: 0;
+                background: url(img/ui/orientation_warning/orientation_img.png), url(img/ui/orientation_warning/orientation_background.png);
+                background-repeat: no-repeat, no-repeat;
+                background-size: 40% auto, 100% 100%;
+                background-position: center, center;
+            }
+
+            .loading-foliage {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: url(img/ui/loading/foliage.gif);
+                background-size: cover;
+                z-index: 101;
+            }
+
+            .loading {
+
+                position: fixed;
+
+                display: flex;
+
+                flex-direction: column;
+
+                justify-content: center;
+
+                top: 0;
+
+                left: 0;
+
+                width: 100%;
+
+                height: 100%;
+
+                z-index: 100;
+
+                background: url(img/ui/loading/background.jpg) no-repeat;
+
+                background-size: cover;
+
+                background-color: #3a461f;
+
+                color: #d6b893;
+
+            }
+
+
+            .loading-heading {
+
+                margin: 0 0 5vw;
+
+                font-size: 10vw;
+
+                padding-left: 26vw;
+
+                -webkit-text-stroke: 2px #704918;
+
+                text-stroke: 2px #704918;
+
+            }
+
+
+            .loading-item {
+                position: relative;
+                padding-left: 30vw;
+                margin: 0 0 2.5vw;
+                font-size: 3.9vw;
+                -webkit-text-stroke: 1px #704918;
+                opacity: 0.7;
+                text-stroke: 1px #704918;
+            }
+
+
+            .loading-item::before {
+
+                position: absolute;
+
+                top: 50%;
+
+                transform: translateY(-50%);
+
+                left: 22vw;
+
+                width: 5vw;
+
+                height: 5vw;
+
+                content: "";
+
+                background: url(img/ui/loading/undone.png) no-repeat;
+
+                background-size: 100% 100%;
+
+            }
+
+            .loading-item.done {
+
+                opacity: 1;
+
+            }
+
+
+            .loading-item.done::before {
+
+                background-image: url('img/ui/loading/done.png');
+
+            }
+
+            .dots::after {
+
+                position: absolute;
+
+                content: '';
+
+                display: inline-block;
+
+                animation: dots 1s steps(4, end) infinite;
+
+            }
+
+
+            .loading-dogs {
+
+                margin: 3vw auto 0;
+
+                height: 225px;
+
+                width: 535px;
+
+                zoom: 0.6;
+
+                background: url(img/ui/loading/dogs-preview.png);
+
+                background-size: auto 100%;
+            }
+
+            .loading-item.done + .loading-item {
+                animation: loading_item_pulse 1.5s infinite;
+            }
+
+
+            @keyframes loading_item_pulse {
+                50% {
+                    opacity: 1;
+                }
+
+                100% {
+                    opacity: 0.7;
+                }
+            }
+
+            @keyframes dogs_loading {
+
+                0% {
+
+                    background-position: 0;
+
+                }
+
+
+                100% {
+
+                    background-position: -16050px;
+
+                }
+
+            }
+
+
+            @keyframes dots {
+
+                0%,
+                20% {
+
+                    content: '';
+
+                }
+
+
+                40% {
+
+                    content: '.';
+
+                }
+
+                60% {
+
+                    content: '..';
+
+                }
+
+                80%,
+                100% {
+
+                    content: '...';
+
+                }
+
+            }
+
+            .reconnect {
+                min-height: 100%;
+                min-width: 100%;
+                margin: 0;
+                padding: 0;
+                border: 0;
+                outline: 0;
+                background: rgba(0, 0, 0, 0.6);
+                flex-direction: column;
+                align-items: center;
+                padding: 37vh 0 0;
+            }
+
+            .reconnect-title {
+                top: 50%;
+                left: 50%;
+                font-size: 11.5vw;
+                color: #d6b893;
+                -webkit-text-stroke: 2px #704918;
+                text-stroke: 2px #704918;
+            }
+
+            .reconnect-timer {
+                color: #d6b893;
+                -webkit-text-stroke: 2px #704918;
+                text-stroke: 2px #704918;
+                font-size: 7vw;
+            }
+
+            .reconnect-counter {
+                color: #d6b893;
+                -webkit-text-stroke: 2px #704918;
+                text-stroke: 2px #704918;
+                font-size: 7vw;
+            }
+
+            .videoplayer {
+                position: absolute;
+                width: 23vw;
+                height: 35vw;
+                background: #f9f9f9;
+                box-shadow: 0px 0px 20px 7px rgba(0, 0, 0, 0.3);
+                top: 100px;
+                left: 5vw;
+                z-index: 11;
+                border-radius: 10px;
+                overflow: hidden;
+                transition: left 0.5s ease, top 0.5s ease;
+            }
+
+            .videoplayer iframe {
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+            }
+
+            #popup-dialog {
+                min-width: 100%;
+                min-height: 100%;
+                border: 0;
+                margin: 0;
+                padding: 0;
+                outline: 0;
+                background: none;
+            }
+
+            #popup-dialog::backdrop {
+                background-color: rgba(0, 0, 0, 0.3);
+            }
+
+            .popup-referral-info-close {
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 14vw;
+                height: 14vw;
+            }
+
+            .popup-referral-info {
+                position: absolute;
+                width: 90%;
+                background-size: 100% auto;
+                aspect-ratio: 809 / 382;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                background-image: url(img/ui/profile/referal_link_info.png);
+                transform: translate(-50%, -50%);
+            }
+
+            .popup-referral-share {
+                width: 100%;
+                background-size: 100% auto;
+                aspect-ratio: 988 / 595;
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                background-image: url(img/ui/profile/referral_modal.png);
+            }
+
+            .popup-referral-share::after {
+                content: "";
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background-image: url(img/ui/profile/referral_modal_shadow.png);
+                background-size: contain;
+                left: 0;
+                bottom: 0;
+                z-index: -1;
+                mix-blend-mode: multiply;
+                opacity: 0.5;
+            }
+
+            .popup-referral-share-send {
+                position: absolute;
+                top: 16vw;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 74vw;
+                height: 11vw;
+            }
+
+            .popup-referral-share-copy {
+                position: absolute;
+                top: 28vw;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 74vw;
+                height: 11vw;
+            }
+
+            .popup-referral-share-close {
+                position: absolute;
+                top: 43vw;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 35vw;
+                height: 10vw;
+            }
+
+            .rocket-game {
+                min-width: 100%;
+                min-height: 100%;
+                margin: 0;
+                padding: 0;
+                border: 0;
+                outline: 0;
+                background: #fff;
+            }
+
+            .rocket-game-container {
+                position: relative;
+                height: 90vh;
+                width: 100%;
+                background: #2abaee;
+            }
+
+            .rocket-game-rocket {
+                position: absolute;
+                bottom: 4vh;
+                left: 4vw;
+                width: 100px;
+                height: 50px;
+                background: #000;
+            }
+
+            .rocket-game-wrapper {
+                background: tomato;
+                position: absolute;
+                bottom: 4vw;
+                left: 4vw;
+                right: 4vw;
+                height: 8vh;
+                display: flex;
+
+            }
+
+            .rocket-game-start-wrapper {
+                display: none;
+            }
+
+            .rocket-game-wrap-input {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                flex-wrap: wrap;
+            }
+
+            .rocket-game-input {
+                height: 100%;
+            }
+
+            .rocket-game-process-wrapper {
+            }
+
+            .rocket-game-ratio {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .rocket-game-ratio::after {
+                content: "x";
+            }
+
+            .rocket-game-main-button {
+                margin-left: 2vw;
+                width: 40%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .notification-quests {
+                min-width: 39%;
+                min-height: 53vw;
+                top: 11%;
+                left: 14%;
+                z-index: -1;
+                margin: 0;
+                padding: 0;
+                border: 0;
+                outline: 0;
+                background: none;
+            }
+
+            .notification-quests-item {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background: url(img/quests_notifications/1.gif) no-repeat;
+                background-size: contain;
+            }
+
+            .notification-quests-area {
+                display: none;
+                position: absolute;
+                aspect-ratio: 835 / 1100;
+                min-width: 42%;
+                top: 11%;
+                left: 13%;
+                z-index: 100;
+            }
+
+            .notification-quests::backdrop {
+                display: none;
+            }
+
+		</style>
+
+
+	</head>
+
+	<script src="//cdn.jsdelivr.net/npm/eruda"></script>
+	<body>
+		<div class="not-supported">
+			Sorry! Your device is not supported
+		</div>
+		<dialog class="orientation-warning">
+		</dialog>
+		<div class="loading-foliage">
+		</div>
+		<div class="loading">
+
+			<div class="loading-heading">Loading<span class="dots"></span></div>
+
+			<div class="loading-item done">official game demo</div>
+
+			<div class="loading-item">clan system</div>
+
+			<div class="loading-item">new skins and upgrades</div>
+
+			<div class="loading-item">new locations</div>
+
+			<div class="loading-item">special events</div>
+
+			<div class="loading-item">clan battles</div>
+
+			<div class="loading-item" style="font-size: 6vw;">airdrop</div>
+
+			<div class="loading-item">staking</div>
+
+			<div class="loading-dogs"></div>
+
+		</div>
+		<dialog class="reconnect">
+			<div class="reconnect-title">reconnect<span class="dots"></span></div>
+			<div class="reconnect-timer">00:05</div>
+			<div class="reconnect-counter">Failed requests: <span></span></div>
+		</dialog>
+
+		<script>
+            const reconnectElement = document.querySelector('.reconnect');
+            const reconnectCounter = document.querySelector('.reconnect-counter span');
+            const reconnectTimer = document.querySelector('.reconnect-timer');
+
+            function startReconnectTimer() {
+                let timer = 5;
+                reconnectTimer.textContent = `00:${timer.toString().padStart(2, '0')}`;
+
+                const intervalId = setInterval(() => {
+                    timer--;
+                    reconnectCounter.textContent = request_queue;
+                    reconnectTimer.textContent = `00:${timer.toString().padStart(2, '0')}`;
+
+                    if (timer <= 0) {
+                        clearInterval(intervalId);
+                        if (request_queue === 0) {
+                            reconnectElement.close();
+                            reconnectElement.style.display = 'none';
+                        } else {
+                            location.reload();
+                        }
+                    }
+                }, 1000);
+            }
+
+            function checkAndReconnect() {
+                if (request_queue !== 0) {
+                    reconnectElement.showModal();
+                    reconnectElement.style.display = 'flex';
+                    reconnectCounter.textContent = request_queue;
+                    startReconnectTimer();
+                }
+            }
+		</script>
+
+		<script>
+            const spriteLoading = new Image();
+            spriteLoading.src = 'img/ui/loading/dogs.png';
+            spriteLoading.addEventListener('load', function () {
+                document.querySelector('.loading-dogs').style.backgroundImage = 'url(img/ui/loading/dogs.png)';
+                document.querySelector('.loading-dogs').style.animation = 'dogs_loading 1s steps(30) infinite';
+            })
+            let minimumTimeElapsed = false;
+            let resourcesLoaded = false;
+            setTimeout(function () {
+                minimumTimeElapsed = true;
+                if (resourcesLoaded) {
+                    hideLoadingElement();
+                }
+            }, 5000);
+
+            function hideLoadingElement() {
+                document.querySelector('.loading-foliage').style.display = 'block';
+                document.querySelector('.loading').style.display = 'none';
+                setTimeout(() => {
+                    document.querySelector('.loading-foliage').style.display = 'none';
+                }, 1200)
+                tg.headerColor = '#527523'
+            }
+
+            window.addEventListener('load', function () {
+                resourcesLoaded = true;
+                if (minimumTimeElapsed) {
+                    hideLoadingElement();
+                }
+            });
+		</script>
+
+		<div class="mining-overlay">
+
+			<div class="mining-overlay-signboard">
+
+				<div class="mining-overlay-time">00:00:00 left</div>
+				<div class="mining-overlay-warning">
+					<div class="mining-overlay-desc"></div>
+					<div class="mining-overlay-boost"
+					     ontouchstart="openModal('#upgrade-modal', '.modal-upgrade-btn-nazad'); switchTab('boosts'); clearTimeout(timerStartMining)"></div>
+					<div class="mining-overlay-start"
+					     ontouchstart="clearTimeout(timerStartMining); startMining();"></div>
+				</div>
+
+			</div>
+			<!--			<p class="mining-starttimer" style="-->
+			<!--    position: absolute;-->
+			<!--    z-index: 100;-->
+			<!--    width: 49%;-->
+			<!--    text-align: center;-->
+			<!--    font-size: 2.4vw;-->
+			<!--    color: #d6b893;-->
+			<!--    -webkit-text-stroke: 1px #704918;-->
+			<!--">press button for start mining mode (autostart 5 sec.)-->
+			<!--			</p>-->
+		</div>
+
+		<script>
+            let isMiningAllowed = true;
+
+            function startMining() {
+                tg.HapticFeedback.impactOccurred('medium');
+
+                if (isMiningAllowed) {
+                    global_click_queue++;
+                    isMiningAllowed = false;
+                    sendClickAction();
+
+                    setTimeout(() => {
+                        isMiningAllowed = true;
+                    }, 10000);
+                }
+            }
+		</script>
+
+		<div class="clickable-area"></div>
+
+		<div class="energy-bar">
+
+			<text>
+				<now-energy-text>100</now-energy-text>
+				/
+				<max-energy-text>100</max-energy-text>
+			</text>
+
+		</div>
+
+		<div class="counter-fon">
+
+			<div class="balance">0</div>
+
+		</div>
+		<div class="boosts-active-list">
+		</div>
+
+		<!-- <div class="videoplayer">
+    </div>
+    <script>
+        const videoplayer = document.querySelector('.videoplayer');
+
+        if(cloudStorage.getItem("clip_mode") == "off") {
+            videoplayer.style.display = 'none';
+        }
+
+        const videoLinks = [
+            'http://www.youtube.com/embed?listType=playlist&list=PLthjD69EpGSZKhmQzUOZfUhCZzDs1IBBz'
+        ];
+
+        let currentIndex = 0;
+
+        function updateVideo() {
+            const currentVideo = videoLinks[currentIndex];
+            videoplayer.innerHTML = `<iframe src="${currentVideo}&autoplay=1&mute=1&modestbranding=1&controls=0" allow="autoplay" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+            currentIndex = (currentIndex + 1) % videoLinks.length;
+        }
+
+        window.onload = updateVideo;
+
+        let isDragging = false;
+        let startX, startY, initialX, initialY;
+
+        const boundaryTop = 100;
+        const boundaryLeft = 15;
+        const boundaryRight = window.innerWidth - 15;
+        const boundaryBottom = window.innerHeight - 100;
+
+        videoplayer.addEventListener('touchstart', function(e) {
+            isDragging = true;
+            const touch = e.touches[0];
+            startX = touch.clientX;
+            startY = touch.clientY;
+            initialX = videoplayer.offsetLeft;
+            initialY = videoplayer.offsetTop;
+            e.preventDefault();
+        }, { passive: false });
+
+        videoplayer.addEventListener('touchmove', function(e) {
+            if (isDragging) {
+                const touch = e.touches[0];
+                const dx = touch.clientX - startX;
+                const dy = touch.clientY - startY;
+
+                let newLeft = initialX + dx;
+                let newTop = initialY + dy;
+
+                if (newLeft < boundaryLeft) {
+                    newLeft = boundaryLeft;
+                } else if (newLeft + videoplayer.offsetWidth > boundaryRight) {
+                    newLeft = boundaryRight - videoplayer.offsetWidth;
+                }
+
+                if (newTop < boundaryTop) {
+                    newTop = boundaryTop;
+                } else if (newTop + videoplayer.offsetHeight > boundaryBottom) {
+                    newTop = boundaryBottom - videoplayer.offsetHeight;
+                }
+
+                videoplayer.style.left = `${newLeft}px`;
+                videoplayer.style.top = `${newTop}px`;
+
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        videoplayer.addEventListener('touchend', function() {
+            if (!isDragging) return;
+            isDragging = false;
+
+            const currentLeft = videoplayer.offsetLeft;
+            const currentTop = videoplayer.offsetTop;
+
+            const distances = {
+                topLeft: Math.sqrt(currentLeft**2 + currentTop**2),
+                topRight: Math.sqrt((boundaryRight - videoplayer.offsetWidth - currentLeft)**2 + currentTop**2),
+                bottomLeft: Math.sqrt(currentLeft**2 + (boundaryBottom - videoplayer.offsetHeight - currentTop)**2),
+                bottomRight: Math.sqrt((boundaryRight - videoplayer.offsetWidth - currentLeft)**2 + (boundaryBottom - videoplayer.offsetHeight - currentTop)**2)
+            };
+
+            const closestCorner = Object.keys(distances).reduce((a, b) => distances[a] < distances[b] ? a : b);
+
+            let targetLeft, targetTop;
+            switch (closestCorner) {
+                case 'topLeft':
+                    targetLeft = boundaryLeft;
+                    targetTop = boundaryTop;
+                    break;
+                case 'topRight':
+                    targetLeft = boundaryRight - videoplayer.offsetWidth;
+                    targetTop = boundaryTop;
+                    break;
+                case 'bottomLeft':
+                    targetLeft = boundaryLeft;
+                    targetTop = boundaryBottom - videoplayer.offsetHeight;
+                    break;
+                case 'bottomRight':
+                    targetLeft = boundaryRight - videoplayer.offsetWidth;
+                    targetTop = boundaryBottom - videoplayer.offsetHeight;
+                    break;
+            }
+
+            videoplayer.style.left = `${targetLeft}px`;
+            videoplayer.style.top = `${targetTop}px`;
+        });
+    </script> -->
+
+		<div class="baldo baldo-idle-1"
+		     style="background-image: url(img/sprites/step1_idle-v6.png); animation: baldo_idle_play 0.7s steps(2) infinite;"></div>
+		<div class="baldo baldo-idle-2"
+		     style="background-image: url(img/sprites/step2_idle-v3.png); animation: baldo_idle_play 0.7s steps(2) infinite;"
+		     hidden></div>
+		<div class="baldo baldo-step-1"
+		     style="background-image: url(img/sprites/step1-v3.png); animation: baldo_play 0.5s steps(16);"
+		     hidden></div>
+		<div class="baldo baldo-step-2"
+		     style="background-image: url(img/sprites/step2-v3.png); animation: baldo_play 0.5s steps(16);"
+		     hidden></div>
+		<div class="baldo baldo-step-3"
+		     style="background-image: url(img/sprites/step3-v3.png); animation: baldo_play 0.5s steps(16);"
+		     hidden></div>
+		<div class="baldo baldo-to-mining"
+		     style="background-image: url(img/sprites/to_mining-v3.png); animation: baldo_to_mining 0.7s steps(7) forwards;"
+		     hidden></div>
+		<div class="baldo baldo-mining"
+		     style="background-image: url(img/sprites/mining-v6.png); animation: baldo_mining 0.7s steps(2) infinite;"
+		     hidden></div>
+
+		<script>
+            function changeAnimation(newClass) {
+                document.querySelector('.baldo:not([hidden])').hidden = true;
+                document.querySelector(`.${newClass}`).hidden = false;
+            }
+		</script>
+		<div class="hits"></div>
+
+		<div class="fon-sky">
+
+			<div class="fon-clouds-1"></div>
+
+			<div class="fon-clouds-2"></div>
+
+		</div>
+
+		<div class="fon-trees"></div>
+
+		<div class="fon-forest"></div>
+
+		<div class="fon-tree"></div>
+
+		<div class="fon-lawn"></div>
+
+		<div class="fon-grass-flower-2"></div>
+
+		<div class="fon-grass-flower-3"></div>
+
+		<div class="fon-grass-flower"></div>
+
+		<div class="fon-grass">
+
+			<div class="fon-grass-1"></div>
+
+			<div class="fon-grass-2"></div>
+
+			<div class="fon-grass-3"></div>
+
+			<div class="fon-grass-4"></div>
+
+			<div class="fon-grass-5"></div>
+
+		</div>
+
+		<div class="poof"></div>
+
+
+		<div class="bottom-bg-btns">
+
+			<div class="bottom-btns upgrade"
+			     ontouchstart="openModal('#upgrade-modal', '.modal-upgrade-btn-nazad')"></div>
+
+			<div class="bottom-btns quests"
+			     ontouchstart="openModal('#quests-modal', '.modal-quests-btn-nazad', initializeQuestSystem)"></div>
+
+			<div class="bottom-btns guild"></div>
+
+			<div class="bottom-btns profile"
+			     ontouchstart="openModal('#profile-modal', '.modal-nazad', initializeCountersProfile)"></div>
+
+		</div>
+
+
+		<dialog id="profile-modal">
+
+			<div class="profile-modal-body">
+
+				<!-- <div class="modal-profile-image">
+
+        <div class="modal-profile-photo"></div>
+
+      </div> -->
+
+				<div class="modal-name-profile">
+
+					<username>UserName</username>
+					<div class="modal-points-earnings">0</div>
+
+				</div>
+
+				<div class="modal-referral-link" style="display: none;">
+					<div class="modal-referral-link-wrap" ontouchstart="openPopup('.popup-referral-share')"></div>
+					<span class="modal-referral-counter">0 frens in game :(</span>
+					<span class="modal-referral-link-desc">tap here to invite someone</span>
+
+					<div class="modal-referral-info" ontouchstart="openPopup('.popup-referral-info')"></div>
+				</div>
+
+				<div class="modal-referral-earnings" style="display: none;">
+					<div>0</div>
+				</div>
+				<div class="modal-referral-list" style="display: none;">
+				</div>
+				<div class="modal-referral-preloader preloader"></div>
+			</div>
+
+
+			<div class="settings-modal-body" hidden>
+
+				<div class="modal-settings-music">
+
+					<div class="music-switch"
+					     ontouchstart='music_switch(this); tg.HapticFeedback.selectionChanged()'></div>
+
+				</div>
+
+				<div class="modal-settings-vibration">
+
+					<div class="vibration-switch"
+					     ontouchstart='vibration_switch(this);  tg.HapticFeedback.selectionChanged()'></div>
+
+				</div>
+				<!-- <div class="modal-settings-clip">
+
+            <div class="clip-switch" ontouchstart='clip_switch(this);'></div>
+
+        </div> -->
+
+				<div class="modal-settings-language"></div>
+
+				<div class="modal-settings-wiki"
+				     ontouchstart="showWikiModal();"></div>
+				<div class="modal-settings-help"
+				     ontouchstart="tg.HapticFeedback.impactOccurred('light'); tg.openTelegramLink('https://t.me/spikegamesupport');"></div>
+
+			</div>
+
+			<div class="modal-nazad"></div>
+
+			<div class="modal-profile-btn-profile" ontouchstart="
+    tg.HapticFeedback.impactOccurred('light');
+    document.querySelector('.settings-modal-body').style.display = 'none';
+
+    document.querySelector('.profile-modal-body').style.display = 'flex';
+
+    document.querySelector('.modal-profile-btn-settings').style.backgroundImage = 'url(img/ui/profile/btns/settings_passive.png)';
+
+    this.style.backgroundImage = 'url(img/ui/profile/btns/profile_active.png)';"></div>
+
+
+			<div class="modal-profile-btn-settings" ontouchstart="
+    tg.HapticFeedback.impactOccurred('light');
+    document.querySelector('.profile-modal-body').style.display = 'none';
+
+    document.querySelector('.settings-modal-body').style.display = 'flex';
+
+    document.querySelector('.modal-profile-btn-profile').style.backgroundImage = 'url(img/ui/profile/btns/profile_passive.png)';
+
+    this.style.backgroundImage = 'url(img/ui/profile/btns/settings_active.png)';"></div>
+
+		</dialog>
+
+		<dialog id="wiki-modal">
+			<div class="wiki-modal-timeline">
+				<div class="wiki-modal-timeline-item">
+					<div class="wiki-modal-timeline-progress"></div>
+				</div>
+				<div class="wiki-modal-timeline-item">
+					<div class="wiki-modal-timeline-progress"></div>
+				</div>
+				<div class="wiki-modal-timeline-item">
+					<div class="wiki-modal-timeline-progress"></div>
+				</div>
+			</div>
+			<div class="wiki-modal-slide" style="background-image: url(img/ui/wiki/wiki_1.png);"></div>
+
+			<div class="wiki-modal-slide" style="background-image: url(img/ui/wiki/wiki_2.png);"></div>
+
+			<div class="wiki-modal-slide"
+			     style="background-image: url(img/ui/wiki/wiki_3_content.png), url(img/ui/wiki/wiki_3_bg.png); background-size: 90% auto, 100% 100%;">
+			</div>
+
+			<div class="wiki-modal-btn-prev wiki-modal-btn"></div>
+
+			<div class="wiki-modal-btn-next wiki-modal-btn"></div>
+
+		</dialog>
+
+		<script>
+            const wikiModalSlides = document.querySelectorAll('.wiki-modal-slide');
+            const wikiModalTimelineItems = document.querySelectorAll('.wiki-modal-timeline-item');
+            const wikiModalTimelineProgresses = document.querySelectorAll('.wiki-modal-timeline-progress');
+            let wikiModalCurrentSlideIndex = 0;
+            let wikiModalTimer;
+
+            function startWikiModalTimer() {
+                const progress = wikiModalTimelineProgresses[wikiModalCurrentSlideIndex];
+                progress.style.transition = 'none';
+                progress.style.width = '0%';
+
+                setTimeout(() => {
+                    progress.style.transition = 'width 10s linear';
+                    progress.style.width = '100%';
+                }, 100);
+
+                wikiModalTimer = setTimeout(() => {
+                    handleWikiModalNextClick();
+                }, 10000);
+            }
+
+            function resetWikiModalTimer() {
+                clearTimeout(wikiModalTimer);
+                startWikiModalTimer();
+            }
+
+            function updateWikiModalSlides(newIndex) {
+                const previousProgress = wikiModalTimelineProgresses[wikiModalCurrentSlideIndex];
+
+                if (newIndex > wikiModalCurrentSlideIndex) {
+                    previousProgress.style.transition = 'none';
+                    previousProgress.style.width = '100%';
+                } else if (newIndex < wikiModalCurrentSlideIndex) {
+                    previousProgress.style.transition = 'none';
+                    previousProgress.style.width = '0%';
+                }
+
+                wikiModalSlides[wikiModalCurrentSlideIndex].classList.remove('active');
+                wikiModalTimelineItems[wikiModalCurrentSlideIndex].classList.remove('active');
+
+                if (newIndex >= wikiModalSlides.length || newIndex < 0) {
+                    closeWikiModal();
+                    return;
+                }
+
+                wikiModalCurrentSlideIndex = newIndex;
+
+                wikiModalSlides[wikiModalCurrentSlideIndex].classList.add('active');
+                wikiModalTimelineItems[wikiModalCurrentSlideIndex].classList.add('active');
+
+                resetWikiModalTimer();
+            }
+
+            function handleWikiModalNextClick() {
+                const newIndex = wikiModalCurrentSlideIndex + 1;
+                updateWikiModalSlides(newIndex);
+            }
+
+            function handleWikiModalPrevClick() {
+                const newIndex = wikiModalCurrentSlideIndex - 1;
+                updateWikiModalSlides(newIndex);
+            }
+
+            function closeWikiModal() {
+                document.querySelector('#wiki-modal').close();
+                document.querySelector('.wiki-modal-btn-next').removeEventListener('click', handleWikiModalNextClick);
+                document.querySelector('.wiki-modal-btn-prev').removeEventListener('click', handleWikiModalPrevClick);
+                wikiModalCurrentSlideIndex = 0;
+                wikiModalTimelineProgresses.forEach((progress) => {
+                    progress.style.transition = 'none';
+                    progress.style.width = '0%';
+                });
+
+                tg.offEvent('backButtonClicked', closeWikiModal);
+                tg.onEvent('backButtonClicked', () => {
+                    closeModal('#profile-modal');
+                });
+            }
+
+            function showWikiModal() {
+                updateWikiModalSlides(0);
+                tg.HapticFeedback.impactOccurred('light');
+                tg.offEvent('backButtonClicked', closeModal);
+                tg.onEvent('backButtonClicked', closeWikiModal);
+                document.querySelector('#wiki-modal').showModal();
+                setTimeout(() => {
+                    document.querySelector('.wiki-modal-btn-next').addEventListener('click', handleWikiModalNextClick);
+                    document.querySelector('.wiki-modal-btn-prev').addEventListener('click', handleWikiModalPrevClick);
+                }, 100);
+            }
+		</script>
+
+
+		<dialog id="quests-modal">
+
+			<div class="modal-quests-btn-daily disabled" ontouchstart="
+
+        // document.querySelector('.modal-quests-daily').removeAttribute('hidden');
+
+        // document.querySelector('.modal-quests-weekly').setAttribute('hidden', true);
+
+        // document.querySelector('.modal-quests-main').setAttribute('hidden', true);
+
+        // this.classList.add('active');
+
+        // document.querySelector('.modal-quests-btn-weekly').classList.remove('active');
+
+        // document.querySelector('.modal-quests-btn-main').classList.remove('active');
+
+    "></div>
+
+			<div class="modal-quests-btn-weekly disabled" ontouchstart="
+
+        // document.querySelector('.modal-quests-weekly').removeAttribute('hidden');
+
+        // document.querySelector('.modal-quests-daily').setAttribute('hidden', true);
+
+        // document.querySelector('.modal-quests-main').setAttribute('hidden', true);
+
+        // this.classList.add('active');
+
+        // document.querySelector('.modal-quests-btn-daily').classList.remove('active');
+
+        // document.querySelector('.modal-quests-btn-main').classList.remove('active');
+
+    "></div>
+
+			<div class="modal-quests-btn-main active" ontouchstart="
+
+        document.querySelector('.modal-quests-main').removeAttribute('hidden');
+
+        document.querySelector('.modal-quests-daily').setAttribute('hidden', true);
+
+        document.querySelector('.modal-quests-weekly').setAttribute('hidden', true);
+
+        this.classList.add('active');
+
+        document.querySelector('.modal-quests-btn-daily').classList.remove('active');
+
+        document.querySelector('.modal-quests-btn-weekly').classList.remove('active');
+
+    "></div>
+
+			<div class="modal-quests-daily modal-quests-list" hidden>
+			</div>
+			<template id="quest-template">
+				<div class="modal-quests-item">
+					<img src="" alt="" class="modal-quests-item-img">
+					<div class="modal-quests-item-wrapper">
+						<div href="#" class="modal-quests-item-link-wrap"></div>
+						<div class="modal-quests-item-text"></div>
+						<div class="modal-quests-item-reward"></div>
+						<div class="modal-quests-item-btn"></div>
+					</div>
+				</div>
+			</template>
+
+
+			<div class="modal-quests-weekly modal-quests-list" hidden>
+
+			</div>
+
+
+			<div class="modal-quests-main modal-quests-list">
+				<div class="preloader"></div>
+			</div>
+
+			<div class="modal-quests-btn-nazad"></div>
+
+		</dialog>
+
+		<dialog id="guild-modal">
+
+			<div class="modal-guild-close" ontouchstart="document.querySelector('#guild-modal').close();"></div>
+
+
+			<div class="modal-guild-btn-nazad" style="display: none;" ontouchstart="goBack()"></div>
+
+
+			<div class="modal-guild-first">
+
+				<div class="modal-guild-main-btns join-squad"
+				     ontouchstart="showModalSection('modal-guild-list', this)"></div>
+
+				<div class="modal-guild-main-btns create-squad"
+				     ontouchstart="showModalSection('modal-guild-create', this)">
+				</div>
+
+			</div>
+
+
+			<div class="modal-guild-create" hidden>
+
+				<input type="text" class="modal-guild-main-btns input-name-squad" placeholder="Clan name">
+
+				<div class="modal-guild-main-btns caution-squad"></div>
+
+				<label for="avatar-clan-upload" class="modal-guild-main-btns input-image-squad"></label>
+
+				<input id="avatar-clan-upload" type="file" accept=".png, .jpg">
+
+				<div class="modal-guild-main-btns btn-create-squad"></div>
+
+			</div>
+
+
+			<div class="modal-guild-list" hidden>
+
+				<div class="squad-list-heading"></div>
+
+				<div class="squad-list-container">
+
+					<div class="squad-list-item">
+
+						<img src="img/shield.png" alt="" class="squad-list-ava">
+
+						<div class="squad-list-wrapper">
+
+							<div class="squad-list-name">Clan Name</div>
+
+							<div class="squad-list-text">Ebaldo earnings</div>
+
+							<div class="squad-list-count">members count</div>
+
+						</div>
+
+						<div class="squad-list-btn-join"></div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="modal-guild-owner-panel" hidden>
+
+				<div class="squad-panel-wrapper">
+
+					<img src="img/shield.png" class="modal-guild-panel squad-panel-logo" alt="">
+
+					<div class="modal-guild-panel squad-panel-header">
+
+						<div class="modal-guild-panel squad-panel-number">#11111</div>
+
+						<div class="modal-guild-panel squad-panel-name">Name</div>
+
+						<div class="modal-guild-panel squad-panel-count">count</div>
+
+					</div>
+
+					<div class="modal-guild-panel squad-panel-earnings"></div>
+
+					<div class="modal-guild-panel leaderboard-squad-panel">
+
+						<div class="leaderboard-squad-heading"></div>
+
+						<div class="leaderboard-squad-item">
+
+							<div class="leaderboard-squad-number">1</div>
+
+							<img src="img/nophoto.png" class="leaderboard-squad-avatar">
+
+							<div class="leaderboard-squad-wrapper">
+
+								<div class="leaderboard-squad-name">Nae</div>
+
+								<div class="leaderboard-squad-text">Edsgfdsfg</div>
+
+							</div>
+
+						</div>
+
+						<div class="leaderboard-squad-item">
+
+							<div class="leaderboard-squad-number">2</div>
+
+							<img src="img/nophoto.png" class="leaderboard-squad-avatar" alt="">
+
+							<div class="leaderboard-squad-wrapper">
+
+								<div class="leaderboard-squad-name">Name</div>
+
+								<div class="leaderboard-squad-text">Edsgfdsfg</div>
+
+							</div>
+
+						</div>
+
+						<div class="leaderboard-squad-item">
+
+							<div class="leaderboard-squad-number">3</div>
+
+							<img src="img/nophoto.png" class="leaderboard-squad-avatar" alt="">
+
+							<div class="leaderboard-squad-wrapper">
+
+								<div class="leaderboard-squad-name">Name</div>
+
+								<div class="leaderboard-squad-text">Edsgfdsfg</div>
+
+							</div>
+
+						</div>
+
+						<div class="leaderboard-squad-item">
+
+							<div class="leaderboard-squad-number">1k+</div>
+
+							<img src="img/nophoto.png" class="leaderboard-squad-avatar" alt="">
+
+							<div class="leaderboard-squad-wrapper">
+
+								<div class="leaderboard-squad-name">Name</div>
+
+								<div class="leaderboard-squad-text">Edsgfdsfg</div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+					<div class="modal-guild-panel squad-panel-invite-link"></div>
+
+					<div class="modal-guild-panel squad-panel-leave-btn"></div>
+
+				</div>
+
+			</div>
+
+		</dialog>
+
+
+		<script>
+
+            function showModalSection(sectionId, button = null) {
+
+                if (button && button.classList.contains('closed')) {
+
+                    return;
+
+                }
+
+
+                document.querySelector('.modal-guild-first').hidden = true;
+
+                document.querySelector('.modal-guild-create').hidden = true;
+
+                document.querySelector('.modal-guild-list').hidden = true;
+
+
+                document.querySelector(`.${sectionId}`).hidden = false;
+
+
+                if (sectionId === 'modal-guild-first') {
+
+                    document.querySelector('.modal-guild-btn-nazad').style.display = 'none';
+
+                } else {
+
+                    document.querySelector('.modal-guild-btn-nazad').style.display = 'block';
+
+                }
+
+
+                cloudStorage.setItem('currentModalSection', sectionId);
+
+            }
+
+
+            function goBack() {
+
+                const currentSection = cloudStorage.getItem('currentModalSection');
+
+
+                if (currentSection === 'modal-guild-create' || currentSection === 'modal-guild-list') {
+
+                    showModalSection('modal-guild-first');
+
+                }
+
+            }
+
+
+            document.addEventListener('DOMContentLoaded', () => {
+
+                showModalSection('modal-guild-first');
+
+            });
+
+		</script>
+
+
+		<dialog id="upgrade-modal">
+
+			<div class="upgrades-modal-body">
+
+
+				<div class="modal-upgrades upgrades-axe" ontouchstart="purchaseUpgrade('UA', 'axe_price')">
+
+					<div class="modal-upgrades-axe-animate"></div>
+
+					<text class="upgrades-lvl">lvl. 1</text>
+
+					<div class="upgrades-ebaldo-wrap">
+
+						<text class="upgrades-ebaldo">100 points</text>
+
+					</div>
+
+				</div>
+
+				<div class="modal-upgrades upgrades-energy" ontouchstart="purchaseUpgrade('UE', 'energy_price', true)">
+
+					<div class="modal-upgrades-energy-animate"></div>
+
+					<text class="upgrades-lvl">lvl. 1</text>
+
+					<div class="upgrades-ebaldo-wrap">
+
+						<text class="upgrades-ebaldo">100 points</text>
+
+					</div>
+
+				</div>
+
+				<div class="modal-upgrades upgrades-mining" ontouchstart="purchaseUpgrade('UM', 'mining_price')">
+
+					<div class="modal-upgrades-mining-animate"></div>
+
+					<text class="upgrades-lvl">lvl. 1</text>
+
+					<div class="upgrades-ebaldo-wrap">
+
+						<text class="upgrades-ebaldo">100 points</text>
+
+					</div>
+
+				</div>
+
+				<div class="modal-upgrades-unavailable" hidden></div>
+
+			</div>
+
+
+			<div class="boosts-modal-body" hidden>
+				<div class="modal-boosts boost-coffee"
+				     ontouchstart="confirmBoostPurchase('BC', 40, 'img/ui/upgrade/boosts/confirm_coffee.png', playerStats.coffee, '1 days')">
+
+					<text class="boosts-available">available 1 times a day</text>
+
+					<div class="boosts-ebaldo-wrap"><span class="boosts-ebaldo">40 points</span></div>
+
+				</div>
+
+				<div class="modal-boosts boost-bone"
+				     ontouchstart="confirmBoostPurchase('BB', 105, 'img/ui/upgrade/boosts/confirm_bone.png', playerStats.bone, '1 days')">
+
+					<text class="boosts-available">available 1 times a day</text>
+
+					<div class="boosts-ebaldo-wrap"><span class="boosts-ebaldo">105 points</span></div>
+
+				</div>
+
+				<div class="modal-boosts boost-steak"
+				     ontouchstart="confirmBoostPurchase('BS', 150, 'img/ui/upgrade/boosts/confirm_steak.png', playerStats.steak, '3 days')">
+
+					<text class="boosts-available">available 1 times a day</text>
+
+					<div class="boosts-ebaldo-wrap"><span class="boosts-ebaldo">150 points</span></div>
+
+				</div>
+
+				<div class="modal-boosts boost-energy-drink"
+				     ontouchstart="confirmBoostPurchase('BE', 250, 'img/ui/upgrade/boosts/confirm_energy_drink.png', playerStats['energy-drink'], '5 days')">
+
+					<text class="boosts-available">available 1 times a day</text>
+
+					<div class="boosts-ebaldo-wrap"><span class="boosts-ebaldo">250 points</span></div>
+
+				</div>
+
+				<div class="modal-boosts-unavailable" hidden></div>
+
+			</div>
+
+
+			<div class="modal-upgrade-btn-nazad"
+			     ontouchstart="switchTab('upgrades');"></div>
+
+			<div class="modal-upgrade-btn-upgrades" ontouchstart="switchTab('upgrades')"></div>
+
+			<div class="modal-upgrade-btn-boosts" ontouchstart="switchTab('boosts')"></div>
+
+		</dialog>
+
+		<script>
+            function switchTab(tab) {
+                tg.HapticFeedback.impactOccurred('light');
+                const upgradesBody = document.querySelector('.upgrades-modal-body');
+                const boostsBody = document.querySelector('.boosts-modal-body');
+                const upgradesButton = document.querySelector('.modal-upgrade-btn-upgrades');
+                const boostsButton = document.querySelector('.modal-upgrade-btn-boosts');
+
+                if (tab === 'boosts') {
+                    boostsBody.removeAttribute('hidden');
+                    upgradesBody.setAttribute('hidden', true);
+                    boostsButton.style.backgroundImage = 'url(img/ui/upgrade/btns/boosts_active.png)';
+                    upgradesButton.style.backgroundImage = 'url(img/ui/upgrade/btns/upgrades_passive.png)';
+                } else {
+                    upgradesBody.removeAttribute('hidden');
+                    boostsBody.setAttribute('hidden', true);
+                    upgradesButton.style.backgroundImage = 'url(img/ui/upgrade/btns/upgrades_active.png)';
+                    boostsButton.style.backgroundImage = 'url(img/ui/upgrade/btns/boosts_passive.png)';
+                }
+            }
+		</script>
+
+
+		<dialog id="popup-dialog">
+			<div class="popup popup-referral-info" hidden>
+				<div class="popup-referral-info-close popup-close"></div>
+			</div>
+			<div class="popup popup-referral-share" hidden>
+				<div class="popup-referral-share-send"
+				     ontouchstart="tg.HapticFeedback.impactOccurred('light'); window.location.href = `https://t.me/share/url?url=https://t.me/DogeSpikeBot/CHOP?startapp=${playerStats.referral_id}&text=Let’s chop to earn 💵🪓`">
+				</div>
+				<div class="popup-referral-share-copy"
+				     onclick="
+                navigator.clipboard.writeText(`https://t.me/DogeSpikeBot/CHOP?startapp=${playerStats.referral_id}`)
+                    .then(() => {
+                        tg.HapticFeedback.notificationOccurred('success');
+                        document.querySelector('.popup-referral-share').style.backgroundImage = 'url(img/ui/profile/referral_modal_copied.png)';
+                        setTimeout(() => {
+                            document.querySelector('.popup-referral-share').style.backgroundImage = 'url(img/ui/profile/referral_modal.png)'
+                        }, 3000)}
+                    )">
+				</div>
+				<div class="popup-referral-share-close popup-close"></div>
+			</div>
+			<div class="popup popup-confirm-boost" hidden>
+				<div class="popup-confirm-boost-close popup-close"></div>
+				<div class="popup-confirm-boost-available">available 1 time per day.</div>
+				<div class="popup-confirm-boost-confirm"></div>
+			</div>
+		</dialog>
+
+		<script>
+            let isPopupOpen = false;
+
+            function openPopup(classPopup) {
+                isPopupOpen = true;
+                document.querySelector(classPopup).hidden = false;
+                document.querySelector('#popup-dialog').showModal();
+                document.querySelector(classPopup + ' .popup-close').addEventListener('touchstart', closePopup);
+                tg.HapticFeedback.impactOccurred('light');
+            }
+
+            function closePopup() {
+                isPopupOpen = false;
+                const activePopup = document.querySelector('#popup-dialog .popup:not([hidden])');
+                activePopup.hidden = true;
+                document.querySelector('#popup-dialog').close();
+
+                activePopup.querySelector('.popup-close').removeEventListener('touchstart', closePopup);
+                tg.HapticFeedback.impactOccurred('light');
+            }
+
+            document.querySelector('#popup-dialog').addEventListener('touchstart', function (event) {
+                if (event.target === document.querySelector('#popup-dialog')) {
+                    closePopup();
+                }
+            });
+		</script>
+
+		<dialog class="notification-quests">
+			<div class="notification-quests-item" id="notification-free-30"></div>
+		</dialog>
+		<div class="notification-quests-area"
+		     ontouchstart="openModal('#quests-modal', '.modal-quests-btn-nazad', initializeQuestSystem)"></div>
+
+		<dialog class="rocket-game" id="rocket-game">
+			<div class="rocket-game-close"></div>
+			<div class="rocket-game-container">
+				<div class="rocket-game-rocket"></div>
+			</div>
+			<div class="rocket-game-start-wrapper rocket-game-wrapper">
+				<div class="rocket-game-wrap-input">
+					<input type="text" class="rocket-game-input" value="1000">
+					<div class="rocket-game-input-plus">+</div>
+					<div class="rocket-game-input-minus">-</div>
+				</div>
+				<div class="rocket-game-main-button">start</div>
+			</div>
+			<div class="rocket-game-process-wrapper rocket-game-wrapper">
+				<div class="rocket-game-ratio">1.0</div>
+				<div class="rocket-game-main-button">stop</div>
+			</div>
+		</dialog>
+
+		<script>
+		</script>
+
+
+		<!--preload-->
+
+		<link rel="preload" as="font" href="SuperSedan.ttf" crossorigin>
+		<link rel="preload" as="image" href="img/ui/loading/background.jpg">
+		<link rel="preload" as="image" href="img/ui/loading/done.png">
+		<link rel="preload" as="image" href="img/ui/loading/undone.png">
+		<link rel="preload" as="image" href="img/ui/loading/dogs.png">
+		<link rel="preload" as="image" href="img/ui/loading/foliage.gif">
+		<link rel="preload" as="image" href="img/ui/orientation_warning/orientation_background.png">
+		<link rel="preload" as="image" href="img/ui/orientation_warning/orientation_img.png">
+		<link rel="preload" as="image" href="img/ui/menu.png">
+		<link rel="preload" as="image" href="img/ui/energy_bar.png">
+
+		<!-- <link rel="preload" as="audio" href="music/sound.mp3">
+<link rel="preload" as="audio" href="music/axe.mp3"> -->
+		<link rel="preload" as="image" href="img/fon/forest.png">
+
+		<link rel="preload" as="image" href="img/fon/3.png">
+
+		<link rel="preload" as="image" href="img/fon/4.png">
+
+		<link rel="preload" as="image" href="img/fon/1.png">
+
+		<link rel="preload" as="image" href="img/fon/sky.png">
+
+		<link rel="preload" as="image" href="img/fon/cloud_1.png">
+
+		<link rel="preload" as="image" href="img/fon/cloud_2.png">
+
+		<link rel="preload" as="image" href="img/fon/lawn.png">
+
+		<link rel="preload" as="image" href="img/fon/tree-right.png">
+
+		<link rel="preload" as="image" href="img/hits/plus.png">
+		<link rel="preload" as="image" href="img/hits/0.png">
+		<link rel="preload" as="image" href="img/hits/1.png">
+		<link rel="preload" as="image" href="img/hits/2.png">
+		<link rel="preload" as="image" href="img/hits/3.png">
+		<link rel="preload" as="image" href="img/hits/4.png">
+		<link rel="preload" as="image" href="img/hits/5.png">
+		<link rel="preload" as="image" href="img/hits/6.png">
+		<link rel="preload" as="image" href="img/hits/7.png">
+		<link rel="preload" as="image" href="img/hits/8.png">
+		<link rel="preload" as="image" href="img/hits/9.png">
+
+		<link rel="preload" as="image" href="img/sprites/mining-v6.png">
+
+		<link rel="preload" as="image" href="img/sprites/step1-v3.png">
+		<link rel="preload" as="image" href="img/sprites/step2-v3.png">
+		<link rel="preload" as="image" href="img/sprites/step3-v3.png">
+		<link rel="preload" as="image" href="img/sprites/step1_idle-v6.png">
+		<link rel="preload" as="image" href="img/sprites/step2_idle-v3.png">
+		<link rel="preload" as="image" href="img/sprites/to_mining-v3.png">
+
+
+		<link rel="preload" as="image" href="img/mining_signboard/shadow.gif">
+
+		<link rel="preload" as="image" href="img/mining_signboard/signboard.gif">
+
+		<link rel="preload" as="image" href="img/mining_signboard/desc.png">
+
+		<link rel="preload" as="image" href="img/mining_signboard/mining_btn.png">
+
+		<link rel="preload" as="image" href="img/mining_signboard/boost_btn.png">
+
+		<link rel="preload" as="image" href="img/fon/flower.gif">
+
+		<link rel="preload" as="image" href="img/fon/flower_2.gif">
+
+		<link rel="preload" as="image" href="img/fon/flower_3.gif">
+
+		<link rel="preload" as="image" href="img/fon/grass_1.gif">
+
+
+		<link rel="preload" as="image" href="img/ui/preloader-v2.gif">
+
+		<link rel="preload" as="image" href="img/ui/profile/btns/profile_active.png">
+
+		<link rel="preload" as="image" href="img/ui/profile/btns/profile_passive.png">
+
+		<link rel="preload" as="image" href="img/ui/profile/btns/settings_active.png">
+
+		<link rel="preload" as="image" href="img/ui/profile/referal_link_info.png">
+
+		<link rel="preload" as="image" href="img/ui/wiki/wiki_1.png">
+
+		<link rel="preload" as="image" href="img/ui/wiki/wiki_2.png">
+
+		<link rel="preload" as="image" href="img/ui/wiki/wiki_3_bg.png">
+
+		<link rel="preload" as="image" href="img/ui/wiki/wiki_3_content.png">
+
+		<link rel="preload" as="image" href="img/ui/upgrade/price.png">
+
+		<link rel="preload" as="image" href="img/ui/upgrade/price_not.png">
+
+		<link rel="preload" as="image" href="img/ui/upgrade/price_unavailable.png">
+
+		<link rel="preload" as="image" href="img/ui/upgrade/boosts/unavailable_message.png">
+
+		<link rel="preload" as="image" href="img/ui/upgrade/upgrades/unavailable_message.png">
+
+		<link rel="preload" as="image" href="img/ui/upgrade/upgrades/level.png">
+
+		<link rel="preload" as="image" href="img/ui/upgrade/boosts/confirm_coffee.png">
+
+		<link rel="preload" as="image" href="img/ui/upgrade/boosts/confirm_coffee.png">
+
+		<link rel="preload" as="image" href="img/ui/upgrade/boosts/confirm_coffee.png">
+
+		<link rel="preload" as="image" href="img/ui/upgrade/boosts/confirm_bone.png">
+
+		<link rel="preload" as="image" href="img/ui/upgrade/boosts/confirm_steak.png">
+
+		<link rel="preload" as="image" href="img/ui/upgrade/boosts/confirm_energy_drink.png">
+
+		<link rel="preload" as="image" href="img/ui/upgrade/btns/boosts_passive.png">
+
+		<link rel="preload" as="image" href="img/ui/upgrade/btns/upgrades_active.png">
+
+		<link rel="preload" as="image" href="img/ui/upgrade/btns/upgrades_passive.png">
+
+		<link rel="preload" as="image" href="img/ui/upgrade/btns/boosts_active.png">
+
+		<link rel="preload" as="image" href="img/ui/settings/switch_off.png">
+		<link rel="preload" as="image" href="img/ui/settings/wiki.png">
+		<link rel="preload" as="image" href="img/ui/settings/help.png">
+
+		<link rel="preload" as="image" href="img/ui/settings/switch_on.png">
+
+		<link rel="preload" as="image" href="img/ui/counter.png">
+
+		<link rel="preload" as="image" href="img/ui/profile/fon.png">
+
+		<link rel="preload" as="image" href="img/ui/profile/points_earned.png">
+		<link rel="preload" as="image" href="img/ui/profile/referral_counter.png">
+
+		<link rel="preload" as="image" href="img/ui/profile/referral_link-v1.png">
+
+		<link rel="preload" as="image" href="img/ui/profile/referral_earnings.png">
+
+		<link rel="preload" as="image" href="img/ui/profile/referral_modal.png">
+		<link rel="preload" as="image" href="img/ui/profile/referral_modal_copied.png">
+		<link rel="preload" as="image" href="img/ui/profile/referral_modal_shadow.png">
+		<link rel="preload" as="image" href="img/ui/profile/die_numbers.png">
+		<link rel="preload" as="image" href="img/ui/profile/rating_item.png">
+		<link rel="preload" as="image" href="img/ui/profile/scroll_thumb.png">
+		<link rel="preload" as="image" href="img/ui/profile/scrollbar.png">
+
+
+		<link rel="preload" as="image" href="img/ui/profile/nazad.png">
+
+		<link rel="preload" as="image" href="img/ui/upgrade/btns/nazad.png">
+
+		<link rel="preload" as="image" href="img/ui/profile/btns/settings_passive.png">
+
+		<link rel="preload" as="image" href="img/ui/settings/music.png">
+
+		<link rel="preload" as="image" href="img/ui/settings/vibration.png">
+
+		<link rel="preload" as="image" href="img/ui/settings/language.png">
+
+		<link rel="preload" as="image" href="img/ui/quests/fon.png">
+
+		<link rel="preload" as="image" href="img/ui/quests/btns/daily_passive.png">
+		<link rel="preload" as="image" href="img/ui/quests/btns/nazad.png">
+		<link rel="preload" as="image" href="img/ui/quests/item/complete_task.png">
+		<link rel="preload" as="image" href="img/ui/quests/item/item_background.png">
+		<link rel="preload" as="image" href="img/ui/quests/item/task_completed.png">
+		<link rel="preload" as="image" href="img/ui/quests/item/check_task.png">
+		<link rel="preload" as="image" href="img/ui/quests/item/reward_bg.png">
+		<link rel="preload" as="image" href="img/quests_icon/telegram.png">
+		<link rel="preload" as="image" href="img/quests_icon/twitter.png">
+		<link rel="preload" as="image" href="img/quests_icon/xquests.png">
+		<link rel="preload" as="image" href="img/quests_icon/ytquests.png">
+		<link rel="preload" as="image" href="img/quests_icon/get_free_30.gif">
+
+
+		<link rel="preload" as="image" href="img/ui/quests/btns/weekly_passive.png">
+		<link rel="preload" as="image" href="img/ui/quests/btns/weekly_active.png">
+		<link rel="preload" as="image" href="img/ui/quests/btns/daily_active.png">
+		<link rel="preload" as="image" href="img/ui/quests/btns/main_active.png">
+		<link rel="preload" as="image" href="img/ui/quests/btns/main_passive.png">
+		<link rel="preload" as="image" href="img/ui/quests/btns/weekly_disabled.png">
+		<link rel="preload" as="image" href="img/ui/quests/btns/daily_disabled.png">
+
+
+		<link rel="preload" as="image" href="img/ui/upgrade/fon.png">
+
+		<link rel="preload" as="image" href="img/ui/upgrade/boosts/confirm_bone.png">
+
+		<link rel="preload" as="image" href="img/ui/upgrade/boosts/bone.png">
+
+		<link rel="preload" as="image" href="img/ui/upgrade/boosts/coffee.png">
+
+		<link rel="preload" as="image" href="img/ui/upgrade/boosts/energy_drink.png">
+
+		<link rel="preload" as="image" href="img/ui/upgrade/boosts/steak.png">
+
+		<link rel="preload" as="image" href="img/ui/upgrade/upgrades/axe.png">
+
+		<link rel="preload" as="image" href="img/ui/upgrade/upgrades/axe.gif">
+
+		<link rel="preload" as="image" href="img/ui/upgrade/upgrades/energy.png">
+
+		<link rel="preload" as="image" href="img/ui/upgrade/upgrades/energy.gif">
+
+		<link rel="preload" as="image" href="img/ui/upgrade/upgrades/mining.png">
+
+		<link rel="preload" as="image" href="img/ui/upgrade/upgrades/mining.gif">
+
+
+		<link rel="preload" as="image" href="img/ui/upgrade/btns/upgrades_passive.png">
+
+		<link rel="preload" as="image" href="img/ui/upgrade/btns/boosts_active.png">
+		<link rel="preload" as="image" href="img/quests_notifications/1.gif">
+
+
+	</body>
+	<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+	<script>
+
+        window.addEventListener('scroll', e => {
+            window.scrollTo(0, 0)
+        })
+        let tg = window.Telegram.WebApp;
+        tg.disableVerticalSwipes();
+        tg.headerColor = '#212a0b';
+        tg.BackButton.hide();
+        let socket = new WebSocket("wss://spikegame.app/ws");
+        // let socket = new WebSocket("wss://vitabrain.ru:8001");
+
+        let new_socket_connection = 0;
+        let socketConnect_interval = setInterval(() => {
+            new_socket_connection = new_socket_connection + 1;
+            if (new_socket_connection > 3) {
+                window.location.reload();
+            }
+            socket = new WebSocket("wss://spikegame.app/ws");
+        }, 2000);
+
+        const cloudStorage = localStorage;
+
+        setTimeout(() => {
+            const scaleBaldo = tg.viewportStableHeight * 0.62 / 990;
+            document.querySelectorAll('.baldo').forEach((e) => {
+                e.style.scale = scaleBaldo;
+            })
+        }, 2000)
+
+
+        let superUser;
+
+        if (tg.platform == "unknown") {
+            username = "user"
+            userId = 0;
+        } else {
+            userId = tg.initDataUnsafe.user.id;
+            username = tg.initDataUnsafe.user.username;
+
+            if (userId == 876917783) {
+            //    userId = Math.floor(Math.random() * 10001);
+				  eruda.init()
+            }
+            // userId = Math.floor(Math.random() * 10001);
+
+            window.Telegram.WebApp.ready();
+
+            window.Telegram.WebApp.expand();
+
+        }
+
+        function checkOrientation() {
+            const type = screen.orientation.type;
+            if (!type.includes('landscape')) {
+                document.querySelector('.orientation-warning').close();
+            } else {
+                document.querySelector('.orientation-warning').showModal();
+            }
+        }
+
+        checkOrientation();
+
+        screen.orientation.addEventListener("change", (event) => {
+            checkOrientation();
+        });
+
+        tg.onEvent('viewportChanged', () => {
+            setTimeout(() => {
+                const scaleBaldo = tg.viewportStableHeight * 0.62 / 990;
+                document.querySelectorAll('.baldo').forEach((e) => {
+                    e.style.scale = scaleBaldo
+                })
+            }, 300)
+        })
+
+        function fitText(element, maxFontSizeVW) {
+            const parentWidth = element.parentElement.clientWidth;
+            let fontSizeVW = maxFontSizeVW;
+
+            element.style.fontSize = fontSizeVW + 'vw';
+
+            while (element.scrollWidth > parentWidth && fontSizeVW > 1) {
+                fontSizeVW -= 1;
+                element.style.fontSize = fontSizeVW + 'vw';
+            }
+        }
+
+        document.querySelector('.modal-name-profile > username').innerHTML = username;
+        if (cloudStorage.getItem('background_music') == 'off') {
+            document.querySelector('.music-switch').style.backgroundImage = "url(img/ui/settings/switch_off.png)";
+        }
+        if (cloudStorage.getItem('vibration') == 'off') {
+            document.querySelector('.vibration-switch').style.backgroundImage = "url(img/ui/settings/switch_off.png)";
+        }
+
+        let global_click_queue = 0;
+        let request_queue = 0;
+        let global_coin_flag = true;
+        let global_animate_flag = true;
+        let isMiningMode = false;
+
+        let action;
+
+        const playerStats = {
+            _energy: null,
+            max_energy: 0,
+            _balance: null,
+            axe_lvl: 1,
+            mining_lvl: 1,
+            energy_lvl: 1,
+            axe_price: 0,
+            energy_price: 0,
+            mining_price: 0,
+            not_sleep: 0,
+            guild_id: 0,
+            bone: 0,
+            steak: 0,
+            coffee: 0,
+            "energy-drink": 0,
+            referral_id: 0,
+            server_energy: 0,
+        }
+
+        Object.defineProperty(playerStats, 'energy', {
+            get: function () {
+                return this._energy;
+            },
+            set: function (value) {
+                this._energy = Math.min(Math.max(value, 0), this.max_energy);
+                updateEnergyUI();
+                updateBoostAvailability('.boost-bone', this.bone, 1);
+                updateBoostAvailability('.boost-coffee', this.coffee, 1);
+                updateBoostAvailability('.boost-energy-drink', this["energy-drink"], 5);
+                updateBoostAvailability('.boost-steak', this.steak, 3);
+
+                if (value === 0) {
+                    global_animate_flag = false;
+                    global_coin_flag = false;
+                    document.querySelector('.modal-upgrades-unavailable').hidden = false;
+                    document.querySelector('.modal-boosts-unavailable').hidden = false;
+                    document.querySelector('.upgrades-energy .upgrades-ebaldo-wrap').classList.add('unavailable');
+                } else {
+                    document.querySelector('.modal-upgrades-unavailable').hidden = true;
+                    document.querySelector('.modal-boosts-unavailable').hidden = true;
+                    document.querySelector('.upgrades-energy .upgrades-ebaldo-wrap').classList.remove('unavailable');
+                }
+            }
+        });
+
+        Object.defineProperty(playerStats, 'balance', {
+            get: function () {
+                return this._balance;
+            },
+            set: function (value) {
+                this._balance = value;
+                document.querySelector('.balance').innerHTML = value;
+                updateUpgradePrices(value, this.axe_lvl, this.energy_lvl);
+                updateBoostPrices(value, this.energy_lvl);
+            }
+        })
+
+        Object.defineProperty(playerStats, 'energy_lvl', {
+            get: function () {
+                return this._energy_lvl;
+            },
+            set: function (value) {
+                this._energy_lvl = value;
+                this.energy_price = 250 * Math.pow(2, value - 1)
+                setUpgrade('.upgrades-energy', value);
+            }
+        })
+
+        Object.defineProperty(playerStats, 'axe_lvl', {
+            get: function () {
+                return this._axe_lvl;
+            },
+            set: function (value) {
+                this._axe_lvl = value;
+                this.axe_price = 250 * Math.pow(2, value - 1);
+                setUpgrade('.upgrades-axe', value);
+            }
+        })
+
+        Object.defineProperty(playerStats, 'mining_lvl', {
+            get: function () {
+                return this._mining_lvl;
+            },
+            set: function (value) {
+                this._mining_lvl = value;
+                setUpgradeMining()
+                document.querySelector('.upgrades-mining .upgrades-ebaldo').innerHTML = this.mining_price;
+            }
+        })
+
+        Object.defineProperty(playerStats, 'bone', {
+            get: function () {
+                return this._bone;
+            },
+            set: function (value) {
+                this._bone = value
+                handleBoostItem("bone", '.boost-bone', value, 1);
+            }
+        })
+
+        Object.defineProperty(playerStats, 'coffee', {
+            get: function () {
+                return this._coffee;
+            },
+            set: function (value) {
+                this._coffee = value
+                handleBoostItem("coffee", '.boost-coffee', value, 1);
+            }
+        })
+
+        Object.defineProperty(playerStats, 'energy-drink', {
+            get: function () {
+                return this['_energy-drink'];
+            },
+            set: function (value) {
+                this['_energy-drink'] = value
+                handleBoostItem("energy-drink", '.boost-energy-drink', value, 5);
+            }
+        })
+
+        Object.defineProperty(playerStats, 'steak', {
+            get: function () {
+                return this._steak;
+            },
+            set: function (value) {
+                this._steak = value
+                handleBoostItem("steak", '.boost-steak', value, 3);
+            }
+        })
+
+
+        function updateEnergyUI() {
+            let energy_percent = Math.round((playerStats.energy / (playerStats.max_energy / 88)));
+            document.querySelector('.energy-bar').style.background = "url(img/ui/energy_bar.png) " + Math.max((energy_percent * 312), 315) + "px 0px";
+            document.querySelector('.energy-bar > text > max-energy-text').innerHTML = playerStats.max_energy;
+            document.querySelector('.energy-bar > text > now-energy-text').innerHTML = playerStats.energy;
+        }
+
+        const refParam = window.Telegram.WebApp.initDataUnsafe.start_param;
+
+        socket.onopen = function (e) {
+            action = "get";
+            if (!refParam || cloudStorage.getItem(`referral_used${userId}`)) {
+                socket.send(`get:${userId}`);
+            } else {
+                cloudStorage.setItem(`referral_used${userId}`, 'true');
+                socket.send(`get:${userId}:${refParam}`);
+            }
+        };
+
+
+        socket.onclose = function (e) {
+            console.log("server died onclose");
+            request_queue++;
+            checkAndReconnect();
+
+        }
+
+        socket.onerror = function (e) {
+            console.log("server died onerror");
+            request_queue++;
+            checkAndReconnect();
+        }
+
+        if (tg.platform !== 'ios' && tg.platform !== 'android' && !superUser) {
+            document.querySelector('.not-supported').style.display = 'flex';
+            socket.onclose = null;
+            socket.onerror = null;
+            socket.close();
+        }
+
+        if (typeof HTMLDialogElement === 'undefined' || !('showModal' in HTMLDialogElement.prototype)) {
+            document.querySelector('.not-supported').style.display = 'flex';
+            socket.onclose = null;
+            socket.onerror = null;
+            socket.close();
+        }
+
+
+        function setUpgrade(selector, item_value) {
+
+            document.querySelector(selector + ' > .upgrades-lvl').innerHTML = "Lvl." + item_value;
+
+            const maxUpgradeLevel = 12;
+
+            if (item_value >= maxUpgradeLevel) {
+
+                document.querySelector(selector).onclick = '';
+
+                document.querySelector(selector + ' .upgrades-ebaldo-wrap').classList.add('unavailable');
+
+                document.querySelector(selector + ' .upgrades-ebaldo').innerHTML = 'unavailable';
+
+                document.querySelector(selector + ' > .upgrades-lvl').innerHTML = 'max Lvl';
+
+                return;
+
+            }
+
+
+            let upgradePrice = 250 * Math.pow(2, item_value - 1);
+
+            document.querySelector(selector + ' .upgrades-ebaldo').innerHTML = upgradePrice;
+
+        }
+
+
+        function setUpgradeMining() {
+
+            const P = {2: 3, 3: 7, 4: 15, 5: 30};
+
+            const maxMiningLevel = 5;
+
+            const currentMiningLevel = Number(playerStats.mining_lvl);
+
+            const nextMiningLevel = currentMiningLevel + 1;
+
+
+            if (currentMiningLevel >= maxMiningLevel) {
+
+                document.querySelector('.upgrades-mining').onclick = '';
+
+                document.querySelector('.upgrades-mining .upgrades-ebaldo-wrap').classList.add('unavailable');
+
+                document.querySelector('.upgrades-mining .upgrades-ebaldo').innerHTML = 'unavailable';
+
+                document.querySelector('.upgrades-mining > .upgrades-lvl').innerHTML = 'max Lvl';
+
+                return;
+
+            }
+
+
+            const upgradeCosts = {
+
+                500: [1300, 3500, 8400, 18800],
+
+                1000: [2600, 7000, 16900, 37500],
+
+                1500: [3900, 10500, 25300, 56300],
+
+                2000: [5300, 14000, 33800, 75000],
+
+                2500: [6600, 17500, 42200, 93800],
+
+                3000: [7900, 21000, 50600, 112500],
+
+                3500: [9200, 24500, 59100, 131300],
+
+                4000: [10500, 28000, 67500, 150000],
+
+                4500: [11800, 31500, 75900, 168800],
+
+                5000: [13100, 35000, 84400, 187500],
+
+                5500: [14400, 38500, 92800, 206300],
+
+                6000: [15800, 42000, 101300, 225000]
+
+            }
+
+
+            document.querySelector('.upgrades-mining > .upgrades-lvl').innerHTML = "Lvl." + currentMiningLevel;
+            const upgradeCost = upgradeCosts[playerStats.max_energy][nextMiningLevel - 2];
+
+
+            playerStats.mining_price = upgradeCost;
+            return upgradeCost;
+
+        }
+
+
+        function updateBoostAvailability(selector, item_value, availableInDays) {
+            const availabilityText = item_value >= 1 && item_value <= 6
+                ? `available ${item_value} ${item_value === 1 ? "time" : "times"} per ${availableInDays === 1 ? "day" : `${availableInDays} days`}.`
+                : item_value === 7
+                    ? "available per week."
+                    : "unavailable";
+
+            if (playerStats.energy === 0 || item_value === 0) {
+                document.querySelector(selector + ' .boosts-ebaldo-wrap').classList.add('unavailable');
+            } else {
+                document.querySelector(selector + ' .boosts-ebaldo-wrap').classList.remove('unavailable');
+            }
+
+            document.querySelector(selector + ' > .boosts-available').innerHTML = availabilityText;
+
+        }
+
+
+        function handleBoostItem(boostType, selector, item_value, availableInDays) {
+            updateBoostAvailability(selector, item_value, availableInDays);
+
+            if ((cloudStorage.getItem(`B${boostType.charAt(0).toUpperCase()}_active${userId}`) == 1) && playerStats[boostType] == 0) {
+                const boostsActiveList = document.querySelector('.boosts-active-list');
+                const existingBoost = boostsActiveList.querySelector(`img[src="img/ui/upgrade/boosts/${boostType}_icon.png"]`);
+
+                if (!existingBoost) {
+                    const div = document.createElement('div');
+                    div.className = "boosts-active-item";
+                    div.innerHTML = `<img src="img/ui/upgrade/boosts/${boostType}_icon.png" alt="">`;
+                    boostsActiveList.appendChild(div);
+                }
+
+            }
+
+        }
+
+
+        const itemHandlers = {
+
+            "UA": function (item_value) {
+                playerStats.axe_lvl = Number(item_value);
+            },
+
+            "UE": function (item_value) {
+                playerStats.energy_lvl = Number(item_value)
+            },
+
+            "UM": function (item_value) {
+                playerStats.mining_lvl = Number(item_value)
+            },
+
+            "BB": function (item_value) {
+                playerStats.bone = Number(item_value);
+            },
+
+            "BC": function (item_value) {
+                playerStats.coffee = Number(item_value);
+            },
+
+            "BE": function (item_value) {
+                playerStats['energy-drink'] = Number(item_value);
+            },
+
+            "BS": function (item_value) {
+                playerStats.steak = Number(item_value);
+            },
+
+            "M": function (item_value) {
+                playerStats.max_energy = Number(item_value);
+            },
+
+            "G": function (item_value) {
+
+                let canCreateClan = item_value.charAt(0) === '1';
+
+                let isClanLeader = item_value.charAt(0) === '2';
+
+                playerStats.guild_id = item_value.slice(1);
+
+                cloudStorage.setItem("can_create_clan", canCreateClan ? "true" : "false");
+
+                if (!canCreateClan) {
+
+                    document.querySelector('.create-squad').classList.add('closed');
+
+                }
+
+
+                if (isClanLeader) {
+
+                    document.querySelector('.squad-panel-leave-btn').style.display = 'none';
+
+                }
+
+
+                if (playerStats.guild_id > 0) {
+
+                    document.querySelector('.modal-guild-first').hidden = true;
+
+                    document.querySelector('.modal-guild-owner-panel').hidden = false;
+
+                }
+
+            }
+
+        };
+
+
+        socket.onmessage = function (event) {
+            global_coin_flag = true;
+            console.log(event.data);
+            new_socket_connection = 0;
+            clearInterval(socketConnect_interval);
+
+            if (!event.data.includes("Error")) {
+                let arr_data;
+
+                switch (action) {
+                    case "clck":
+                        request_queue--;
+                        updateShortData(event.data);
+                        break;
+                    case "chk":
+                        request_queue--;
+                        [questInfo, extraData] = event.data.split('_');
+                        questStatuses = questInfo.split(';').map(item => item.split(':').map(Number));
+                        updateQuests(questStatuses);
+                        updateShortData(extraData);
+                        break;
+					case "tasks":
+                        questStatuses = event.data.split(';').map(item => item.split(':').map(Number));
+                        updateQuests(questStatuses);
+                        break;
+                    case "rcount":
+                        let referralDataList = JSON.parse(event.data.split('_')[0]);
+                        let [referralCounter, pointsEarned, referralsPointsEarned] = event.data.split('_')[1].split(':').map(Number);
+
+                    function formatNumber(num, useAbbreviation = false) {
+                        function abbreviateNumber(num) {
+                            if (num >= 1000000) {
+                                let formatted = (num / 1000000).toFixed(1);
+                                return formatted.endsWith('.0') ? formatted.slice(0, -2) + 'М' : formatted + 'М';
+                            } else if (num >= 100000) {
+                                let formatted = (num / 1000).toFixed(1);
+                                return formatted.endsWith('.0') ? formatted.slice(0, -2) + 'К' : formatted + 'К';
+                            }
+                            return num.toString();
+                        }
+
+                        if (useAbbreviation) {
+                            let abbreviated = abbreviateNumber(num);
+                            if (abbreviated.includes('М') || abbreviated.includes('К')) {
+                                return abbreviated;
+                            }
+                        }
+
+                        return num.toLocaleString('ru-RU').replace(/,/g, ' ');
+                    }
+
+                        document.querySelector('.modal-points-earnings').textContent = formatNumber(pointsEarned);
+                        document.querySelector('.modal-referral-earnings div').textContent = formatNumber(referralsPointsEarned, true);
+                        if (referralCounter > 0) {
+                            document.querySelector('.modal-referral-counter').textContent = formatNumber(referralCounter) + (referralCounter === 1 ? ' fren in game!' : ' frens in game!');
+                            document.querySelector('.modal-referral-link-desc').textContent = 'tap here to invite more';
+                        }
+                        let referralListContainer = document.querySelector('.modal-referral-list');
+                        referralListContainer.innerHTML = '';
+
+                        referralDataList.forEach(referral => {
+                            let [username, userEarned] = referral;
+
+                            let referralItem = document.createElement('div');
+                            referralItem.classList.add('modal-referral-item');
+
+                            let userElement = document.createElement('div');
+                            userElement.classList.add('modal-referral-item-user');
+                            userElement.textContent = username;
+
+                            let earnedElement = document.createElement('div');
+                            earnedElement.classList.add('modal-referral-item-earned');
+                            earnedElement.textContent = formatNumber(Math.round(Number(userEarned * 0.05)));
+
+                            referralItem.appendChild(userElement);
+                            referralItem.appendChild(earnedElement);
+                            referralListContainer.appendChild(referralItem);
+
+                        });
+                        document.querySelector('.modal-referral-preloader').style.display = 'none';
+                        document.querySelector('.modal-referral-link').style.display = 'flex';
+                        document.querySelector('.modal-referral-earnings').style.display = 'block';
+                        document.querySelector('.modal-referral-list').style.display = 'block';
+                        break;
+                    default:
+                        arr_data = event.data.split(",");
+                        let list_upgrades = arr_data[0].split(":");
+                        let parsedData = [];
+
+                        list_upgrades.forEach(function (item) {
+                            let match = item.match(/^([A-Z]+)(\d.*)$/);
+                            if (match) {
+                                let item_type = match[1];
+                                let item_value = match[2];
+
+                                if (item_type === "M") {
+                                    parsedData.unshift({type: item_type, value: item_value});
+                                } else {
+                                    parsedData.push({type: item_type, value: item_value});
+                                }
+                            }
+                        });
+
+                        parsedData.forEach(function (data) {
+                            if (itemHandlers[data.type]) {
+                                itemHandlers[data.type](data.value);
+                            }
+                        });
+
+                        updateShortData(arr_data[1]);
+
+                        playerStats.referral_id = `R1${'0'.repeat(10 - String(userId).length)}${userId}`
+                        break;
+                }
+            } else {
+                alert(event.data);
+            }
+        };
+
+        function initializeCountersProfile() {
+            action = 'rcount';
+            socket.send(`rcount:${userId}`);
+            fitText(document.querySelector('.modal-name-profile > username'), 10);
+        }
+
+
+        function updateBoostPrices(balance, energy_lvl) {
+            let boost_prices = {
+                coffee: 40 * energy_lvl,
+                bone: 105 * energy_lvl,
+                steak: 150 * energy_lvl,
+                'energy-drink': 250 * energy_lvl
+            };
+
+            let boosts = ["coffee", "bone", "steak", "energy-drink"];
+
+            boosts.forEach(boost => {
+                let price = boost_prices[boost];
+                let boostElement = document.querySelector(`.boost-${boost}`);
+                let priceElement = boostElement.querySelector('.boosts-ebaldo');
+                let wrapElement = boostElement.querySelector('.boosts-ebaldo-wrap');
+
+                if (balance >= price) {
+                    wrapElement.classList.remove("not");
+                } else {
+                    wrapElement.classList.add("not");
+                }
+
+                priceElement.innerHTML = price;
+            });
+        }
+
+        function updateUpgradePrices(balance, axe_lvl, energy_lvl) {
+            let upgrades = {
+                axe: playerStats.axe_price,
+                energy: playerStats.energy_price,
+                mining: playerStats.mining_price
+            };
+
+            Object.keys(upgrades).forEach(upgrade => {
+                let price = upgrades[upgrade];
+                let upgradeElement = document.querySelector(`.upgrades-${upgrade}`);
+                let wrapElement = upgradeElement.querySelector('.upgrades-ebaldo-wrap');
+
+                if (!wrapElement.classList.contains('unavailable')) {
+                    if (balance >= price) {
+                        wrapElement.style.backgroundImage = 'url(img/ui/upgrade/price.png)';
+                    } else {
+                        wrapElement.style.backgroundImage = 'url(img/ui/upgrade/price_not.png)';
+                    }
+                }
+            });
+        }
+
+
+        function updateShortData(data) {
+            let [energy, balance, axe_power, timer] = data.split(".");
+            playerStats.server_energy = Number(energy)
+            playerStats.axe_power = Number(axe_power);
+            if (playerStats.energy !== Number(energy) - playerStats.axe_power * global_click_queue) {
+                playerStats.energy = Number(energy) - playerStats.axe_power * global_click_queue;
+            }
+
+            if (playerStats.balance !== Number(balance) + playerStats.axe_power * global_click_queue) {
+                playerStats.balance = Number(balance) + playerStats.axe_power * global_click_queue;
+            }
+
+            setUpgrade('.upgrades-energy', playerStats.energy_lvl);
+
+
+            if (timer > 0) {
+                if (isMiningMode) {
+                    stopMiningMode();
+                }
+                mining_mode(timer);
+                document.querySelector('.boosts-active-list').innerHTML = '';
+                cloudStorage.setItem(`BB_active${userId}`, 0);
+                cloudStorage.setItem(`BE_active${userId}`, 0);
+                cloudStorage.setItem(`BS_active${userId}`, 0);
+
+                console.log(timer)
+            } else {
+                click_mode();
+            }
+        }
+
+
+        function upgrade_and_boost(command, mode) {
+            tg.HapticFeedback.notificationOccurred('success');
+
+            action = command
+
+            switch (mode) {
+                case 'UA':
+                    playerStats.axe_lvl++;
+                    playerStats.balance -= playerStats.axe_price;
+                    break;
+                case 'UE':
+                    playerStats.energy_lvl++;
+                    playerStats.balance -= playerStats.energy_price;
+                    playerStats.max_energy += 500;
+                    playerStats.energy += 500;
+                    break;
+                case 'UM':
+                    playerStats.mining_lvl++;
+                    playerStats.balance -= playerStats.mining_price;
+                    break;
+                case 'BC':
+                    playerStats.coffee--;
+                    playerStats.balance -= 40 * playerStats.energy_lvl;
+                    playerStats.energy += playerStats.max_energy * 0.1;
+                    break;
+                case 'BB':
+                    playerStats.bone--;
+                    playerStats.balance -= 105 * playerStats.energy_lvl;
+                    playerStats.energy += playerStats.max_energy * 0.3;
+                    playerStats.axe_power *= 2;
+                    break;
+                case 'BS':
+                    playerStats.steak--;
+                    playerStats.balance -= 150 * playerStats.energy_lvl;
+                    playerStats.energy += playerStats.max_energy * 0.7;
+                    playerStats.axe_power *= 3;
+                    break;
+                case 'BE':
+                    playerStats['energy-drink']--;
+                    playerStats.balance -= 250 * playerStats.energy_lvl;
+                    playerStats.energy = playerStats.max_energy;
+                    playerStats.axe_power *= 4;
+                    break;
+            }
+
+            if (command == 'set' || mode == 'UE') {
+                document.querySelector('.mining-overlay').style.display = 'none';
+            }
+
+            if (command == 'set' && mode != 'BC') {
+                cloudStorage.setItem(`${mode}_active${userId}`, 1);
+            }
+
+            socket.send(command + ':' + userId + ':' + mode);
+        }
+
+        const questContainer = document.querySelector('.modal-quests-main.modal-quests-list');
+        const questTemplate = document.getElementById('quest-template').content;
+        let questsData = {};
+
+        async function loadQuests() {
+            const response = await fetch('quests.json', {
+                headers: {
+                    'Pragma': 'no-cache',
+                    'Cache-Control': 'no-cache'
+                }
+            });
+            questsData = await response.json();
+        }
+
+        function updateQuests(questStatuses) {
+            questContainer.innerHTML = '';
+
+            questStatuses.forEach(([id, isCompleted]) => {
+                const questData = questsData[id];
+                if (questData) {
+                    if (!questData.sponsor) {
+                        const questItem = questTemplate.cloneNode(true);
+                        const img = questItem.querySelector('.modal-quests-item-img');
+                        const text = questItem.querySelector('.modal-quests-item-text');
+                        const linkWrap = questItem.querySelector('.modal-quests-item-link-wrap');
+                        const btn = questItem.querySelector('.modal-quests-item-btn');
+                        const reward = questItem.querySelector('.modal-quests-item-reward');
+                        questItem.querySelector('.modal-quests-item').id = `quest-${id}`;
+                        img.src = `img/quests_icon/${questData.icon}`;
+                        text.textContent = questData.text;
+                        reward.textContent = `+${questData.reward}`;
+                        if (sessionStorage.getItem(`quest_${id}`)) {
+                            questItem.querySelector('.modal-quests-item').classList.add('modal-quests-item-check');
+                            btn.onclick = () => requestQuestCheck(id);
+                        }
+
+                        linkWrap.addEventListener('click', (event) => {
+                            if (!sessionStorage.getItem(`quest_${id}`)) {
+                                sessionStorage.setItem(`quest_${id}`, 'visited');
+                                setTimeout(() => {
+                                    document.querySelector(`#quest-${id}`).classList.add('modal-quests-item-check');
+                                    btn.onclick = () => requestQuestCheck(id);
+                                }, 2000)
+                            }
+
+                            questData.type === 'tg' ? tg.openTelegramLink(questData.link) : tg.openLink(questData.link);
+                            tg.HapticFeedback.impactOccurred('light');
+                        });
+
+                        if (isCompleted) {
+                            questItem.querySelector('.modal-quests-item').classList.add('modal-quests-item-completed');
+                            btn.onclick = null;
+                        }
+
+                        questContainer.appendChild(questItem);
+                    } else {
+                        // if(isCompleted) {return}
+                        const sponsorQuest = document.createElement('div');
+                        sponsorQuest.className = 'modal-quests-item';
+                        sponsorQuest.id = `quest-${id}`;
+                        sponsorQuest.style.backgroundImage = 'url(img/quests_icon/get_free_30.gif)';
+                        localStorage.setItem(`sponsorQuest_${id}`, 'completed');
+                        sponsorQuest.addEventListener('touchstart', (event) => {
+                            questData.type === 'tg' ? tg.openTelegramLink(questData.link) : tg.openLink(questData.link);
+                            tg.HapticFeedback.impactOccurred('light');
+                        });
+
+                        if (questContainer.firstChild) {
+                            questContainer.insertBefore(sponsorQuest, questContainer.firstChild);
+                        } else {
+                            questContainer.appendChild(sponsorQuest);
+                        }
+                    }
+                }
+            });
+        }
+
+        function requestQuestCheck(id) {
+            action = "chk";
+            socket.send(`chk:${userId}:${id}`);
+            tg.HapticFeedback.notificationOccurred('success');
+
+
+            if (request_queue >= 5) {
+                checkAndReconnect();
+            } else {
+                request_queue++;
+            }
+        }
+
+        async function initializeQuestSystem() {
+            await loadQuests();
+
+            action = "tasks"
+            socket.send(`tasks:${userId}`);
+        }
+
+
+        let showTimerOverlayTimeout;
+        let timerInterval;
+
+        function mining_mode(time) {
+            if (isMiningMode) {
+                clearTimeout(showTimerOverlayTimeout);
+                clearInterval(timerInterval);
+            }
+
+            isMiningMode = true;
+
+            global_animate_flag = false;
+            global_coin_flag = false;
+            global_click_queue = 0;
+            timer = time;
+
+            changeAnimation('baldo-to-mining');
+
+            showTimerOverlayTimeout = setTimeout(() => {
+                if (!isMiningMode) return;
+
+                changeAnimation('baldo-mining');
+            }, 600);
+
+            showTimerOverlayTimeout = setTimeout(() => {
+                if (!isMiningMode) return;
+
+                document.querySelector('.mining-overlay').style.display = 'block';
+                document.querySelector('.mining-overlay-warning').style.display = 'none';
+                document.querySelector('.mining-overlay-time').style.display = 'block';
+                updateTimer();
+                timerInterval = setInterval(updateTimer, 1000);
+            }, 1100);
+
+            console.log("need sleep 1");
+            playerStats.not_sleep = 1;
+        }
+
+        function stopMiningMode() {
+            isMiningMode = false;
+
+            clearTimeout(showTimerOverlayTimeout);
+            clearInterval(timerInterval);
+        }
+
+
+        function formatTime(seconds) {
+
+            let hours = Math.floor(seconds / 3600);
+
+            let minutes = Math.floor((seconds % 3600) / 60);
+
+            let secs = seconds % 60;
+
+            hours = hours < 10 ? '0' + hours : hours;
+
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+
+            secs = secs < 10 ? '0' + secs : secs;
+
+
+            return `${hours}:${minutes}:${secs} left`;
+
+        }
+
+
+        function updateTimer() {
+            if (timer >= 0) {
+
+                document.querySelector('.mining-overlay-time').innerText = formatTime(timer);
+
+                timer--;
+
+            } else {
+                action = "get";
+                socket.send("get:" + userId);
+
+                clearInterval(timerInterval);
+
+                if (document.querySelector('.baldo .baldo-mining').hidden = true) {
+                    changeAnimation('baldo-to-mining');
+                    setTimeout(() => {
+                        changeAnimation('baldo-step-1');
+                    }, 600)
+                }
+
+                global_animate_flag = true;
+                document.querySelector('.mining-overlay').style.display = 'none';
+            }
+
+        }
+
+
+        function click_mode() {
+            isMiningMode = false;
+
+            let timerId = setTimeout(() => {
+
+                if (!global_coin_flag) {
+
+                    setTimeout(() => {
+
+                        //document.getElementsByClassName('chock')[0].setAttribute('style','visibility:visible');
+
+                        //global_animate_flag = true;
+
+                        //global_coin_flag = true;
+
+                    }, 600);
+
+                }
+
+            }, 1000);
+
+            playerStats.not_sleep = 0;
+
+            console.log("click_mode")
+
+        }
+
+        const soundAxeFiles = [
+            'music/axe_1.mp3',
+            'music/axe_2.mp3',
+            'music/axe_3.mp3',
+            'music/axe_4.mp3',
+            'music/axe_5.mp3'
+        ];
+
+        function getRandomAudio() {
+            const randomIndex = Math.floor(Math.random() * soundAxeFiles.length);
+            return new Audio(soundAxeFiles[randomIndex]);
+        }
+
+        let audio_background = new Audio('music/sound.mp3');
+        // const audio_axe = new (window.AudioContext || window.webkitAudioContext)();
+        // let audioBuffer = null;
+        // let isPlayingAxeAllowed = true;
+        // let gainNode = audio_axe.createGain();
+
+        // fetch('music/axe.mp3')
+        //     .then(response => response.arrayBuffer())
+        //     .then(data => audio_axe.decodeAudioData(data))
+        //     .then(buffer => {
+        //         audioBuffer = buffer;
+        //     });
+
+        // gainNode.gain.value = 0.6;
+        // gainNode.connect(audio_axe.destination);
+
+        audio_background.volume = 0.4;
+        audio_background.loop = true
+
+        let backgroundCurrentTime = 0;
+
+        if (cloudStorage.getItem('background_music') == null) {
+
+            cloudStorage.setItem("background_music", "on");
+
+        }
+
+        if (cloudStorage.getItem('vibration') == null) {
+
+            cloudStorage.setItem("vibration", "on");
+
+        }
+
+
+        function music_switch(e) {
+
+            if (cloudStorage.getItem("background_music") == "on") {
+
+                cloudStorage.setItem("background_music", "off");
+
+                audio_background.pause()
+
+                e.style.backgroundImage = "url(img/ui/settings/switch_off.png)";
+
+            } else {
+
+                audio_background.play()
+
+                e.style.backgroundImage = "url(img/ui/settings/switch_on.png)";
+
+                cloudStorage.setItem("background_music", "on");
+
+            }
+
+        }
+
+
+        function vibration_switch(e) {
+
+            if (cloudStorage.getItem("vibration") == "on") {
+
+                cloudStorage.setItem("vibration", "off");
+
+                e.style.backgroundImage = "url(img/ui/settings/switch_off.png)";
+
+            } else {
+
+                e.style.backgroundImage = "url(img/ui/settings/switch_on.png)";
+
+                cloudStorage.setItem("vibration", "on");
+
+            }
+
+        }
+
+        function clip_switch(e) {
+
+            if (cloudStorage.getItem("clip_mode") == "on") {
+
+                cloudStorage.setItem("clip_mode", "off");
+
+                e.style.backgroundImage = "url(img/ui/settings/switch_off.png)";
+                videoplayer.style.display = 'none';
+
+            } else {
+
+                e.style.backgroundImage = "url(img/ui/settings/switch_on.png)";
+                videoplayer.style.display = 'block';
+                cloudStorage.setItem("clip_mode", "on");
+
+            }
+
+        }
+
+        let eventSocketHandlers = {
+            onmessage: null,
+            onopen: null,
+            onclose: null,
+            onerror: null
+        };
+
+        document.addEventListener('visibilitychange', function (e) {
+            sendClickAction();
+            if (clicksCount > 0) {
+                if (document.hidden) {
+                    backgroundCurrentTime = audio_background.currentTime;
+                    removeAudioElement(audio_background);
+                } else {
+                    restoreAudioElement(audio_background, 'music/sound.mp3');
+                    audio_background.currentTime = backgroundCurrentTime;
+
+                    if (cloudStorage.getItem("background_music") == "on") {
+                        audio_background.play();
+                    }
+
+                    if (socket) {
+                        eventSocketHandlers.onmessage = socket.onmessage;
+                        eventSocketHandlers.onopen = socket.onopen;
+                        eventSocketHandlers.onclose = socket.onclose;
+                        eventSocketHandlers.onerror = socket.onerror;
+                        socket.onclose = null;
+                        socket.onerror = null;
+                        socket.close();
+                    }
+
+                    socket = new WebSocket("wss://spikegame.app/ws");
+
+                    socket.onmessage = eventSocketHandlers.onmessage;
+                    socket.onopen = eventSocketHandlers.onopen;
+                    socket.onclose = eventSocketHandlers.onclose;
+                    socket.onerror = eventSocketHandlers.onerror;
+                }
+            }
+
+        });
+
+        window.addEventListener('unload', function () {
+            sendClickAction();
+        })
+
+        function removeAudioElement(audioElement) {
+            audioElement.pause();
+            audioElement.currentTime = 0;
+            audioElement.src = '';
+            audioElement.load();
+        }
+
+        function restoreAudioElement(audioElement, src) {
+            audioElement.src = src;
+            audioElement.load();
+        }
+
+
+        changeAnimation('baldo-idle-1');
+
+
+        function sendClickAction() {
+            if (global_click_queue > 0) {
+                if (action != "clck") {
+                    action = "clck";
+                }
+
+                if (request_queue >= 5) {
+                    checkAndReconnect();
+                } else {
+                    request_queue++;
+                }
+
+                socket.send(`clck:${userId}:${global_click_queue}`);
+                global_click_queue = 0;
+            }
+        }
+
+        let clicksCount = 0
+
+        let clicks = 0
+
+        let stop_axe_audio = true;
+
+        first_click = true;
+
+        let timerStartMining;
+        let isShowedNotification = false;
+
+
+        function clickBody() {
+            if (global_click_queue <= 50) {
+                clicks += 1;
+
+                clicksCount++;
+
+                setTimeout(() => {
+
+                    clicks = clicks - 1
+
+                }, 1000);
+
+
+                console.log(clicks);
+
+
+                if (first_click) {
+
+                    first_click = false;
+
+                    if (cloudStorage.getItem("background_music") == "off") {
+
+                        document.querySelector('.music-switch').style.backgroundImage = "url(img/ui/settings/switch_off.png)";
+
+                    } else if (cloudStorage.getItem("background_music") == "on") {
+
+                        document.querySelector('.music-switch').style.backgroundImage = "url(img/ui/settings/switch_on.png)";
+
+                        audio_background.play();
+                    }
+
+
+                    if (cloudStorage.getItem("vibration") == "off") {
+
+                        document.querySelector('.vibration-switch').style.backgroundImage = "url(img/ui/settings/switch_off.png)";
+
+                    } else if (cloudStorage.getItem("vibration") == "on") {
+
+                        document.querySelector('.vibration-switch').style.backgroundImage = "url(img/ui/settings/switch_on.png)";
+
+                    }
+
+                }
+
+                if (clicksCount === 10 && (playerStats.energy - playerStats.axe_power * 10) > 0 && !isShowedNotification) {
+                    showNotificationTask();
+                }
+
+                if ((global_coin_flag) && (Number(playerStats.energy) > 0) && playerStats.not_sleep == 0) {
+
+                    global_coin_flag = false;
+
+                    setTimeout(() => {
+                        global_coin_flag = true;
+                    }, 50);
+                    // if (audioBuffer && isPlayingAxeAllowed) {
+                    //     isPlayingAxeAllowed = false;
+                    //     const soundSource = audio_axe.createBufferSource();
+                    //     soundSource.buffer = audioBuffer;
+                    //     soundSource.connect(gainNode);
+                    //     soundSource.start(0);
+
+                    //     setTimeout(() => {
+                    //         isPlayingAxeAllowed = true;
+                    //     }, 100);
+                    // }
+
+                    const touchesArray = Object.keys(touches).map(key => touches[key]);
+                    touchesArray.forEach((touch) => {
+                        if (cloudStorage.getItem("vibration") == "on") {
+                            if (navigator.platform == 'iPhone') {
+                                if (clicks < 13) {
+                                    tg.HapticFeedback.impactOccurred('medium');
+                                }
+
+                                if ((clicks >= 13) && (clicks <= 17)) {
+                                    tg.HapticFeedback.impactOccurred('heavy');
+                                }
+
+                                if (clicks > 17) {
+                                    tg.HapticFeedback.impactOccurred('rigid');
+                                }
+                            } else {
+                                tg.HapticFeedback.notificationOccurred('success');
+                            }
+                        }
+
+                        let div = document.createElement('div');
+                        div.className = "hit";
+                        let imagesHTML = '';
+                        String(playerStats.axe_power).split('').forEach(number => {
+                            imagesHTML += `<img src="img/hits/${number}.png" alt="">`;
+                        });
+
+                        div.innerHTML = imagesHTML;
+
+                        let translateX = (touch.pageX === 0 && touch.pageY === 0) ? '47vw' : `${touch.pageX}px`;
+                        let translateY = (touch.pageX === 0 && touch.pageY === 0) ? '63vh' : `${touch.pageY}px`;
+                        div.setAttribute('style', `--translateX: ${translateX}; --translateY: ${translateY};`);
+                        document.querySelector('.hits').appendChild(div);
+
+                        setTimeout(() => {
+                            div.remove();
+                        }, 1000);
+                    });
+
+                    if (global_animate_flag) {
+
+                        global_animate_flag = false;
+
+
+                        if (clicks < 13) {
+                            changeAnimation('baldo-step-1');
+                        }
+
+
+                        if ((clicks >= 13) && (clicks <= 17)) {
+                            changeAnimation('baldo-step-2');
+                        }
+
+
+                        if (clicks > 17) {
+                            changeAnimation('baldo-step-3');
+                        }
+
+
+                        setTimeout(() => {
+
+                            if (clicks < 25) {
+                                changeAnimation('baldo-idle-1');
+                            } else {
+                                changeAnimation('baldo-idle-2');
+                            }
+
+                            global_animate_flag = true;
+
+
+                        }, 500);
+
+                    }
+
+                    if (playerStats.energy - playerStats.axe_power > 0) {
+                        global_click_queue += 1;
+                        playerStats.energy -= playerStats.axe_power;
+                        playerStats.balance += playerStats.axe_power;
+
+                        if ((playerStats.max_energy - playerStats.energy) % (playerStats.max_energy * 0.1) < playerStats.axe_power) {
+                            if (clicksCount > 10 && (playerStats.energy - playerStats.axe_power * 10) > 0 && !isShowedNotification) {
+                                if (Math.random() < 0.25) {
+                                    showNotificationTask();
+                                }
+                            }
+                        }
+
+                        if (global_click_queue >= 15) {
+                            sendClickAction();
+                        }
+                    } else {
+                        sendClickAction();
+                        document.querySelector('.mining-overlay').style.display = 'block';
+
+                        timerStartMining = setTimeout(() => {
+                            startMining();
+                        }, 5000);
+
+                        setTimeout(() => {
+                            document.querySelector('.mining-overlay-warning').style.display = 'block';
+                        }, 1000)
+                    }
+                }
+
+            } else {
+                checkAndReconnect();
+            }
+        }
+
+        function createHandler(func, timeout) {
+
+            let timer = null;
+            let pressed = false;
+
+            return function () {
+
+                if (timer) {
+                    clearTimeout(timer);
+                }
+
+                if (pressed) {
+                    if (func) {
+                        func.apply(this, arguments);
+                    }
+                    clear();
+                } else {
+                    pressed = true;
+                    setTimeout(clear, timeout || 500);
+                }
+
+            };
+
+            function clear() {
+                timeout = null;
+                pressed = false;
+            }
+
+        }
+
+        let touches = [];
+
+        const ignore = createHandler((e) => e.preventDefault(), 500);
+        document.body.addEventListener('touchstart', ignore, {passive: false});
+        document.querySelector('.clickable-area').addEventListener("touchstart", function (e) {
+            touches = []
+            touches = e.touches;
+            clickBody();
+
+        }, {passive: false});
+
+        function openModal(idModal, classButtonBack, callback) {
+            sendClickAction();
+            tg.HapticFeedback.impactOccurred('medium');
+            document.querySelector(idModal).showModal();
+
+            if (typeof callback === 'function') {
+                callback();
+            }
+
+            tg.onEvent('backButtonClicked', function () {
+                closeModal(idModal);
+            });
+
+            tg.BackButton.show();
+
+            if (classButtonBack) {
+                const buttonBack = document.querySelector(classButtonBack);
+                if (buttonBack) {
+                    buttonBack.addEventListener('touchstart', function () {
+                        closeModal(idModal);
+                    });
+                }
+            }
+        }
+
+        function closeModal(idModal) {
+            tg.HapticFeedback.impactOccurred('medium');
+            document.querySelector(idModal).close();
+            tg.BackButton.hide();
+            tg.offEvent('backButtonClicked', closeModal);
+            this.removeEventListener('touchstart', closeModal);
+
+            if (isPopupOpen) {
+                closePopup();
+            }
+        }
+
+        function confirmBoostPurchase(boostType, boostCostMultiplier, boostImagePath, boostItemCount, boostAvailabilityText) {
+            if (playerStats.balance >= boostCostMultiplier * playerStats.energy_lvl && boostItemCount > 0) {
+                if (playerStats.energy > 0) {
+                    tg.HapticFeedback.impactOccurred('light');
+                    const ebaldoWrap = document.querySelector('.boosts-ebaldo-wrap');
+
+                    document.querySelector('.popup-confirm-boost').style.backgroundImage = `url(${boostImagePath})`;
+
+                    const availabilityText = boostItemCount >= 1 && boostItemCount <= 6
+                        ? `available ${boostItemCount} ${boostItemCount === 1 ? 'time' : 'times'} per ${boostAvailabilityText}.`
+                        : boostItemCount === 7
+                            ? 'available per week.'
+                            : 'unavailable';
+
+                    document.querySelector('.popup-confirm-boost .popup-confirm-boost-available').innerHTML = availabilityText;
+
+                    document.querySelector('.popup-confirm-boost-confirm').ontouchstart = function () {
+                        upgrade_and_boost('set', boostType);
+                        closePopup();
+                    };
+
+                    openPopup('.popup-confirm-boost');
+                } else {
+                    tg.HapticFeedback.notificationOccurred('warning');
+                    document.querySelector('.modal-boosts-unavailable').style.animation = '0.5s horizontal-shaking';
+                    setTimeout(() => {
+                        document.querySelector('.modal-boosts-unavailable').style.animation = 'none'
+                    }, 500);
+                }
+            } else {
+                tg.HapticFeedback.notificationOccurred('error');
+            }
+        }
+
+        function purchaseUpgrade(upgradeType, priceKey, energyRequired = false) {
+            if (energyRequired && playerStats.energy <= 0) {
+                document.querySelector('.modal-upgrades-unavailable').style.animation = '0.5s horizontal-shaking';
+                setTimeout(() => {
+                    document.querySelector('.modal-upgrades-unavailable').style.animation = 'none';
+                }, 500);
+                tg.HapticFeedback.notificationOccurred('warning');
+                return;
+            }
+
+            if (playerStats.balance >= playerStats[priceKey]) {
+                upgrade_and_boost('upg', upgradeType);
+            } else {
+                tg.HapticFeedback.notificationOccurred('error');
+            }
+        }
+
+        // openModal('#rocket-game', '.rocket-game-close');
+
+        let coefficientRocket = 1.0;
+        let gameRocketInterval;
+        let isRunningRocket = false;
+        let explosionChanceRocket = 0.1;
+        let growthRateRocket = 0.05;
+        let timeElapsedRocket = 0;
+        let rocketPosition = 100;
+        let isExplodedRocket = false;
+
+        function startRocketGame() {
+            coefficientRocket = 1.0;
+            timeElapsedRocket = 0;
+            rocketPosition = 100;
+            isExplodedRocket = false;
+        }
+
+        function showNotificationTask() {
+            isShowedNotification = true;
+            document.querySelector('.notification-quests').show();
+            setTimeout(() => {
+                document.querySelector('.notification-quests-area').style.display = 'block';
+            }, 2500)
+
+            setTimeout(() => {
+                document.querySelector('.notification-quests').close();
+                document.querySelector('.notification-quests-area').style.display = 'none';
+                isShowedNotification = false;
+            }, 8500)
+        }
+
+
+	</script>
+
+</html>

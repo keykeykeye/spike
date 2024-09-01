@@ -4877,8 +4877,9 @@
 	<script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 	<script>
+		alert(navigator.userAgent)
 
-        window.addEventListener('scroll', e => {
+		window.addEventListener('scroll', e => {
             window.scrollTo(0, 0)
         })
         let tg = window.Telegram.WebApp;
@@ -5124,7 +5125,6 @@
 
         socket.onopen = function (e) {
 			socket.send('get:1');
-			alert(navigator.userAgent)
         };
 
 

@@ -4911,6 +4911,7 @@
 
         if (tg.platform == "unknown") {
             username = "user"
+			superUser = true;
             userId = 0;
         } else {
             userId = tg.initDataUnsafe.user.id;
@@ -5122,13 +5123,8 @@
         const refParam = window.Telegram.WebApp.initDataUnsafe.start_param;
 
         socket.onopen = function (e) {
-            action = "get";
-            if (!refParam || cloudStorage.getItem(`referral_used${userId}`)) {
-                socket.send(`get:${userId}`);
-            } else {
-                cloudStorage.setItem(`referral_used${userId}`, 'true');
-                socket.send(`get:${userId}:${refParam}`);
-            }
+			socket.send('get:1');
+			alert('1')
         };
 
 
@@ -5480,6 +5476,12 @@
                 alert(event.data);
             }
         };
+
+		socket.onmessage = function (e) {
+			alert(e.data);
+			new_socket_connection = 0;
+			clearInterval(socketConnect_interval);
+		}
 
         function initializeCountersProfile() {
             action = 'rcount';

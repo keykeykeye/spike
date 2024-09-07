@@ -53,5 +53,15 @@
         "type": "tg",
         "link": "https://t.me/+tKELd4s4fvAzYjIy",
         "img": "get_free_30.gif"
+    },
+    "9": {
+        "text": "Follow X channel Spike Game",
+        "type": "x",
+        "icon": "xquests.png",
+        "link": "https://x.com/DogeSpike_bot",
+        "reward": 5000,
+        "if": {
+            "languageCodes": ["ru", "ua"]
+        }
     }
 }

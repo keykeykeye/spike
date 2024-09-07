@@ -4875,7 +4875,9 @@
 
 	</body>
 	<script src="https://telegram.org/js/telegram-web-app.js"></script>
-
+	<script src="https://telegram.org/js/games.js"></script>
+	
+	
 	<script>
 
         window.addEventListener('scroll', e => {
@@ -4912,8 +4914,11 @@
         if (tg.platform == "unknown") {
             username = "user"
             userId = 0;
+            userLanguage = 'ru'
+            superUser = true;
         } else {
             userId = tg.initDataUnsafe.user.id;
+            userLanguage = tg.initDataUnsafe.user.language_code;
             username = tg.initDataUnsafe.user.username;
 
             if (userId == 876917783) {
@@ -5645,6 +5650,11 @@
             questStatuses.forEach(([id, isCompleted]) => {
                 const questData = questsData[id];
                 if (questData) {
+                    if(questData.if) {
+                        if (questData.if.languageCodes && !questData.if.languageCodes.includes('userLanguage')) {
+                            return;
+                        }
+                    }
                     if (!questData.sponsor) {
                         const questItem = questTemplate.cloneNode(true);
                         const img = questItem.querySelector('.modal-quests-item-img');

@@ -4909,6 +4909,14 @@
 
 
         let superUser;
+        
+        let userCountry;
+
+        fetch('https://ipinfo.io/json?token=465d2e7c112216')
+            .then(response => response.json())
+            .then(data => {
+                userCountry = data.country;
+            })
 
         if (tg.platform == "unknown") {
             username = "user"
@@ -5650,10 +5658,12 @@
                 const questData = questsData[id];
                 if (questData) {
                     if(questData.if) {
-                        if (questData.if.languageCodes && !questData.if.languageCodes.includes('userLanguage')) {
+                        if (questData.if.languageCodes && (!questData.if.languageCodes.includes(userLanguage) || !questData.if.languageCodes.includes(userCountry.toLowerCase()))) {
+                            console.log('TEST')
                             return;
                         }
                     }
+                    
                     if (!questData.sponsor) {
                         const questItem = questTemplate.cloneNode(true);
                         const img = questItem.querySelector('.modal-quests-item-img');

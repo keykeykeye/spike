@@ -61,7 +61,8 @@
         "link": "https://x.com/DogeSpike_bot",
         "reward": 5000,
         "if": {
-            "languageCodes": ["ru", "ua"]
+            "languageCodes": ["ru", "ua", "kz"],
+            "country": ["ru", "ua"]
         }
     }
 }

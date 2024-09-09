@@ -5657,9 +5657,8 @@
             questStatuses.forEach(([id, isCompleted]) => {
                 const questData = questsData[id];
                 if (questData) {
-                    if(questData.if) {
-                        if (questData.if.languageCodes && (!questData.if.languageCodes.includes(userLanguage) || !questData.if.languageCodes.includes(userCountry.toLowerCase()))) {
-                            console.log('TEST')
+                    if (questData.if.languageCodes && questData.if.country) {
+                        if (!questData.if.languageCodes.includes(userLanguage) && !questData.if.country.includes(userCountry.toLowerCase())) {
                             return;
                         }
                     }

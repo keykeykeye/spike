@@ -3558,7 +3558,7 @@
                 min-width: 42%;
                 top: 11%;
                 left: 13%;
-                z-index: 100;
+                z-index: 8;
             }
 
             .notification-quests::backdrop {
@@ -5653,68 +5653,76 @@
 
         function updateQuests(questStatuses) {
             questContainer.innerHTML = '';
+	        
+            const questsArray = Object.entries(questsData)
+                .map(([id, data]) => ({ id, ...data }))
+                .sort((a, b) => (a.order || 0) - (b.order || 0));
+	        
+            questsArray.forEach(questData => {
+                const id = questData.id;
+                const isCompleted = questStatuses[id];
 
-            questStatuses.forEach(([id, isCompleted]) => {
-                const questData = questsData[id];
-                if (questData) {
+                if(questData.if) {
                     if (questData.if.languageCodes && questData.if.country) {
                         if (!questData.if.languageCodes.includes(userLanguage) && !questData.if.country.includes(userCountry.toLowerCase())) {
                             return;
                         }
                     }
-                    
-                    if (!questData.sponsor) {
-                        const questItem = questTemplate.cloneNode(true);
-                        const img = questItem.querySelector('.modal-quests-item-img');
-                        const text = questItem.querySelector('.modal-quests-item-text');
-                        const linkWrap = questItem.querySelector('.modal-quests-item-link-wrap');
-                        const btn = questItem.querySelector('.modal-quests-item-btn');
-                        const reward = questItem.querySelector('.modal-quests-item-reward');
-                        questItem.querySelector('.modal-quests-item').id = `quest-${id}`;
-                        img.src = `img/quests_icon/${questData.icon}`;
-                        text.textContent = questData.text;
-                        reward.textContent = `+${questData.reward}`;
-                        if (sessionStorage.getItem(`quest_${id}`)) {
-                            questItem.querySelector('.modal-quests-item').classList.add('modal-quests-item-check');
-                            btn.onclick = () => requestQuestCheck(id);
+                }
+
+                if (!questData.sponsor) {
+                    const questItem = questTemplate.cloneNode(true);
+                    const img = questItem.querySelector('.modal-quests-item-img');
+                    const text = questItem.querySelector('.modal-quests-item-text');
+                    const linkWrap = questItem.querySelector('.modal-quests-item-link-wrap');
+                    const btn = questItem.querySelector('.modal-quests-item-btn');
+                    const reward = questItem.querySelector('.modal-quests-item-reward');
+
+                    questItem.querySelector('.modal-quests-item').id = `quest-${id}`;
+                    img.src = `img/quests_icon/${questData.icon}`;
+                    text.textContent = questData.text;
+                    reward.textContent = `+${questData.reward}`;
+
+                    if (sessionStorage.getItem(`quest_${id}`)) {
+                        questItem.querySelector('.modal-quests-item').classList.add('modal-quests-item-check');
+                        btn.onclick = () => requestQuestCheck(id);
+                    }
+
+                    linkWrap.addEventListener('click', (event) => {
+                        if (!sessionStorage.getItem(`quest_${id}`)) {
+                            sessionStorage.setItem(`quest_${id}`, 'visited');
+                            setTimeout(() => {
+                                document.querySelector(`#quest-${id}`).classList.add('modal-quests-item-check');
+                                btn.onclick = () => requestQuestCheck(id);
+                            }, 2000);
                         }
 
-                        linkWrap.addEventListener('click', (event) => {
-                            if (!sessionStorage.getItem(`quest_${id}`)) {
-                                sessionStorage.setItem(`quest_${id}`, 'visited');
-                                setTimeout(() => {
-                                    document.querySelector(`#quest-${id}`).classList.add('modal-quests-item-check');
-                                    btn.onclick = () => requestQuestCheck(id);
-                                }, 2000)
-                            }
+                        questData.type === 'tg' ? tg.openTelegramLink(questData.link) : tg.openLink(questData.link);
+                        tg.HapticFeedback.impactOccurred('light');
+                    });
 
-                            questData.type === 'tg' ? tg.openTelegramLink(questData.link) : tg.openLink(questData.link);
-                            tg.HapticFeedback.impactOccurred('light');
-                        });
+                    if (isCompleted) {
+                        questItem.querySelector('.modal-quests-item').classList.add('modal-quests-item-completed');
+                        btn.onclick = null;
+                    }
 
-                        if (isCompleted) {
-                            questItem.querySelector('.modal-quests-item').classList.add('modal-quests-item-completed');
-                            btn.onclick = null;
-                        }
+                    questContainer.appendChild(questItem);
+                } else {
+                    const sponsorQuest = document.createElement('div');
+                    sponsorQuest.className = 'modal-quests-item';
+                    sponsorQuest.id = `quest-${id}`;
+                    sponsorQuest.style.backgroundImage = 'url(img/quests_icon/get_free_30.gif)';
+                    localStorage.setItem(`sponsorQuest_${id}`, 'completed');
 
-                        questContainer.appendChild(questItem);
+                    sponsorQuest.addEventListener('touchstart', (event) => {
+                        questData.type === 'tg' ? tg.openTelegramLink(questData.link) : tg.openLink(questData.link);
+                        tg.HapticFeedback.impactOccurred('light');
+                    });
+
+                    if (questContainer.firstChild) {
+                        questContainer.insertBefore(sponsorQuest, questContainer.firstChild);
                     } else {
-                        // if(isCompleted) {return}
-                        const sponsorQuest = document.createElement('div');
-                        sponsorQuest.className = 'modal-quests-item';
-                        sponsorQuest.id = `quest-${id}`;
-                        sponsorQuest.style.backgroundImage = 'url(img/quests_icon/get_free_30.gif)';
-                        localStorage.setItem(`sponsorQuest_${id}`, 'completed');
-                        sponsorQuest.addEventListener('touchstart', (event) => {
-                            questData.type === 'tg' ? tg.openTelegramLink(questData.link) : tg.openLink(questData.link);
-                            tg.HapticFeedback.impactOccurred('light');
-                        });
-
-                        if (questContainer.firstChild) {
-                            questContainer.insertBefore(sponsorQuest, questContainer.firstChild);
-                        } else {
-                            questContainer.appendChild(sponsorQuest);
-                        }
+                        questContainer.appendChild(sponsorQuest);
                     }
                 }
             });

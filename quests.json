@@ -4,65 +4,23 @@
         "type": "tg",
         "icon": "habit.png",
         "link": "https://t.me/HabitNetwork_bot?start=funton1408",
-        "reward": 5000
+        "reward": 5000,
+        "order": 2
     },
     "2": {
         "text": "Be the First with Billion Gems",
         "type": "tg",
         "icon": "billiongems.png",
         "link": "https://t.me/billiongems_bot/?start=8fabe8e7bec6",
-        "reward": 5000
+        "reward": 5000,
+        "order": 3
     },
     "3": {
         "text": "Join BITHOVEN",
         "type": "tg",
         "icon": "bithoven.png",
         "link": "https://t.me/Ava_ETHERNITY_bot?start=r_12145bd5",
-        "reward": 5000
-    },
-    "4": {
-        "text": "Play AVA: AI Game",
-        "type": "tg",
-        "icon": "ava.png",
-        "link": "https://t.me/UTXORDbot/WhoIsBithoven?startapp=2f6be8c7-4765-4144-98fd-7e19cc0bbe69",
-        "reward": 5000
-    },
-    "5": {
-        "text": "Follow Telegram channel Spike Game",
-        "type": "tg",
-        "icon": "telegram.png",
-        "link": "https://t.me/DogeSpike",
-        "reward": 5000
-    },
-    "6": {
-        "text": "Follow Youtube channel Spike Game",
-        "type": "yt",
-        "icon": "ytquests.png",
-        "link": "https://www.youtube.com/@DogeSpike",
-        "reward": 5000
-    },
-    "7": {
-        "text": "Follow X channel Spike Game",
-        "type": "x",
-        "icon": "xquests.png",
-        "link": "https://x.com/DogeSpike_bot",
-        "reward": 5000
-    },
-    "8": {
-        "sponsor": true,
-        "type": "tg",
-        "link": "https://t.me/+tKELd4s4fvAzYjIy",
-        "img": "get_free_30.gif"
-    },
-    "9": {
-        "text": "Follow X channel Spike Game",
-        "type": "x",
-        "icon": "xquests.png",
-        "link": "https://x.com/DogeSpike_bot",
         "reward": 5000,
-        "if": {
-            "languageCodes": ["ru", "ua", "kz"],
-            "country": ["ru", "ua"]
-        }
+        "order": 1
     }
 }

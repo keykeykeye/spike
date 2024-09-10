@@ -3139,8 +3139,6 @@
 
                 flex-direction: column;
 
-                justify-content: center;
-
                 top: 0;
 
                 left: 0;
@@ -3164,7 +3162,7 @@
 
             .loading-heading {
 
-                margin: 0 0 5vw;
+                margin: 20vh 0 5vw;
 
                 font-size: 10vw;
 
@@ -3233,22 +3231,6 @@
 
                 animation: dots 1s steps(4, end) infinite;
 
-            }
-
-
-            .loading-dogs {
-
-                margin: 3vw auto 0;
-
-                height: 225px;
-
-                width: 535px;
-
-                zoom: 0.6;
-
-                background: url(img/ui/loading/dogs-preview.png);
-
-                background-size: auto 100%;
             }
 
             .loading-item.done + .loading-item {
@@ -3598,9 +3580,6 @@
 			<div class="loading-item" style="font-size: 6vw;">airdrop</div>
 
 			<div class="loading-item">staking</div>
-
-			<div class="loading-dogs"></div>
-
 		</div>
 		<dialog class="reconnect">
 			<div class="reconnect-title">reconnect<span class="dots"></span></div>
@@ -3645,12 +3624,6 @@
 		</script>
 
 		<script>
-            const spriteLoading = new Image();
-            spriteLoading.src = 'img/ui/loading/dogs.png';
-            spriteLoading.addEventListener('load', function () {
-                document.querySelector('.loading-dogs').style.backgroundImage = 'url(img/ui/loading/dogs.png)';
-                document.querySelector('.loading-dogs').style.animation = 'dogs_loading 1s steps(30) infinite';
-            })
             let minimumTimeElapsed = false;
             let resourcesLoaded = false;
             setTimeout(function () {

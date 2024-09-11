@@ -4851,8 +4851,6 @@
 	
 	
 	<script>
-		alert(navigator.userAgent)
-
 		window.addEventListener('scroll', e => {
             window.scrollTo(0, 0)
         })
@@ -5120,7 +5118,6 @@
         }
 
         socket.onerror = function (e) {
-			alert(e.data)
             console.log("server died onerror");
             request_queue++;
             checkAndReconnect();
@@ -5462,7 +5459,6 @@
         };
 
 		socket.onmessage = function (e) {
-			alert(e.data);
 			new_socket_connection = 0;
 			clearInterval(socketConnect_interval);
 		}

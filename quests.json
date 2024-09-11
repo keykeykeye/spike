@@ -1,26 +1,121 @@
 {
-    "1": {
+    "7": {
         "text": "Habit(Tap > Trade > Win USDT)",
         "type": "tg",
         "icon": "habit.png",
         "link": "https://t.me/HabitNetwork_bot?start=funton1408",
-        "reward": 5000,
-        "order": 2
+        "reward": 3000,
+        "order": 6
     },
-    "2": {
+    "8": {
         "text": "Be the First with Billion Gems",
         "type": "tg",
         "icon": "billiongems.png",
         "link": "https://t.me/billiongems_bot/?start=8fabe8e7bec6",
-        "reward": 5000,
-        "order": 3
+        "reward": 3000,
+        "order": 7
     },
-    "3": {
+    "9": {
         "text": "Join BITHOVEN",
         "type": "tg",
         "icon": "bithoven.png",
+        "link": "https://t.me/UTXORDbot/WhoIsBithoven?startapp=2f6be8c7-4765-4144-98fd-7e19cc0bbe69",
+        "reward": 3000,
+        "order": 8
+    },
+    "10": {
+        "text": "Play AVA: AI Game",
+        "type": "tg",
+        "icon": "ava.png",
         "link": "https://t.me/Ava_ETHERNITY_bot?start=r_12145bd5",
+        "reward": 3000,
+        "order": 9
+    },
+    "11": {
+        "text": "Follow Telegram channel AVA: AI Game",
+        "type": "tg",
+        "icon": "ava.png",
+        "link": "https://t.me/+Evmw_i1LvZs0NmQy",
         "reward": 5000,
+        "order": 10
+    },
+    "12": {
+        "text": "Click to Enter",
+        "type": "tg",
+        "icon": "dlcoin.png",
+        "link": "https://t.me/DLCoinBot/app?startapp=i_90010729756",
+        "reward": 3000,
+        "order": 11
+    },
+    "13": {
+        "text": "Play Pea.AI and Claim 10 USDT",
+        "type": "tg",
+        "icon": "pea.png",
+        "link": "http://t.me/PeaAIBot/CashRally?startapp=cid-66b20324baee0f0035a5b4d8_ch-spike",
+        "reward": 3000,
+        "order": 12
+    },
+    "14": {
+        "text": "WATCH AND LIKE",
+        "type": "yt",
+        "icon": "ytquests.png",
+        "link": "https://www.youtube.com/shorts/BZEALgJ0beo",
+        "reward": 1500,
+        "order": 13
+    },
+    "15": {
+        "text": "WATCH AND REPOST",
+        "type": "tg",
+        "icon": "telegram.png",
+        "link": "https://t.me/DogeSpike/s/2",
+        "reward": 2000,
+        "order": 14
+    },
+    "16": {
+        "text": "SUBSCRIBE SPIKE’S INST",
+        "type": "x",
+        "icon": "inst.png",
+        "link": "https://www.instagram.com/dogespikegame?igsh=MXdraHdjbnNlYXpnaQ==",
+        "reward": 5000,
+        "order": 15
+    },
+    "17": {
+        "text": "SUBSCRIBE TELEGRAM CHANNEL TMV",
+        "type": "tg",
+        "icon": "tmv.png",
+        "link": "https://t.me/True_Market_Vision",
+        "reward": 5000,
+        "order": 3
+    },
+    "1": {
+        "text": "Follow Telegram channel Spike Game",
+        "type": "tg",
+        "icon": "telegram.png",
+        "link": "https://t.me/DogeSpike",
+        "reward": 5000,
+        "order": 2
+    },
+    "2": {
+        "text": "Follow Youtube channel Spike Game",
+        "type": "yt",
+        "icon": "ytquests.png",
+        "link": "https://www.youtube.com/@DogeSpike",
+        "reward": 5000,
+        "order": 4
+    },
+    "3": {
+        "text": "Follow X channel Spike Game",
+        "type": "x",
+        "icon": "xquests.png",
+        "link": "https://x.com/DogeSpikeTon",
+        "reward": 5000,
+        "order": 5
+    },
+    "6": {
+        "sponsor": true,
+        "type": "tg",
+        "link": "https://t.me/+tKELd4s4fvAzYjIy",
+        "img": "get_free_30.gif",
         "order": 1
     }
 }

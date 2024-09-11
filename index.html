@@ -4893,7 +4893,7 @@
 
         if (tg.platform == "unknown") {
             username = "user"
-            userId = 0;
+            userId = 12243;
             userLanguage = 'ru'
             superUser = true;
         } else {
@@ -5630,10 +5630,13 @@
             const questsArray = Object.entries(questsData)
                 .map(([id, data]) => ({ id, ...data }))
                 .sort((a, b) => (a.order || 0) - (b.order || 0));
-	        
+	        console.log(questsArray)
+            
             questsArray.forEach(questData => {
-                const id = questData.id;
-                const isCompleted = questStatuses[id];
+                console.log(questData)
+                const id = Number(questData.id);
+                const isCompleted = questStatuses.find(quest => quest[0] === id)[1];
+                console.log(isCompleted)
 
                 if(questData.if) {
                     if (questData.if.languageCodes && questData.if.country) {
@@ -5702,6 +5705,7 @@
         }
 
         function requestQuestCheck(id) {
+            console.log(id)
             action = "chk";
             socket.send(`chk:${userId}:${id}`);
             tg.HapticFeedback.notificationOccurred('success');
